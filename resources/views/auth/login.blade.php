@@ -1,9 +1,10 @@
 @extends('layouts.auth')
 
 @section('content')
+<div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
                 <div class="panel-heading">{{ ucfirst(config('app.name')) }} Login</div>
                 <div class="panel-body">
                     
@@ -28,12 +29,13 @@
                                value="{{ csrf_token() }}">
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Email</label>
+                            <label class="col-md-4 control-label">User Id</label>
 
                             <div class="col-md-6">
                                 <input type="email"
                                        class="form-control"
                                        name="email"
+                                       placeholder="Enter Your Email Id" 
                                        value="{{ old('email') }}">
                             </div>
                         </div>
@@ -44,12 +46,14 @@
                             <div class="col-md-6">
                                 <input type="password"
                                        class="form-control"
+                                       placeholder="Enter Your Password" 
                                        name="password">
+
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-4 col-md-offset-4">
                                 <a href="{{ route('auth.password.reset') }}">Forgot your password?</a>
                             </div>
                         </div>
@@ -67,15 +71,19 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit"
-                                        class="btn btn-primary"
+                                        class="btn btn-success"
                                         style="margin-right: 15px;">
                                     Login
                                 </button>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="www.webhint.in">Design and Developed</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

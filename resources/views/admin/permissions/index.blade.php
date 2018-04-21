@@ -2,42 +2,43 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('global.permissions.title')</h3>
-    <p>
-        <a href="{{ route('admin.permissions.create') }}" class="btn btn-success">@lang('global.app_add_new')</a>
-    </p>
+    <h3 class="fa fa-users"> Permission Management</h3>
+   
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            @lang('global.app_list')
+           <a href="{{ route('admin.permissions.create') }}" class="btn btn-success">Add New</a>
         </div>
 
         <div class="panel-body table-responsive">
             <table class="table table-bordered table-striped {{ count($permissions) > 0 ? 'datatable' : '' }} dt-select">
                 <thead>
                     <tr>
-                        <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
-                        <th>@lang('global.permissions.fields.name')</th>
-                        <th>&nbsp;</th>
+                        <th><input type="checkbox" id="select-all" /></th>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Action</th>
 
                     </tr>
                 </thead>
                 
                 <tbody>
+                    <?php $i=1; ?>
                     @if (count($permissions) > 0)
                         @foreach ($permissions as $permission)
                             <tr data-entry-id="{{ $permission->id }}">
                                 <td></td>
+                                <td><?= $i++;?></td>
                                 <td>{{ $permission->name }}</td>
                                 <td>
-                                    <a href="{{ route('admin.permissions.edit',[$permission->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
-                                    {!! Form::open(array(
+                                    <a href="{{ route('admin.permissions.edit',[$permission->id]) }}" class="btn btn-md btn-success fa fa-pencil"> Edit</a>
+                                    <!-- {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
                                         'route' => ['admin.permissions.destroy', $permission->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!}
+                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-md btn-danger')) !!}
+                                    {!! Form::close() !!} -->
                                 </td>
 
                             </tr>

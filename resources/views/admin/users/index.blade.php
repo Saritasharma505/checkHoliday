@@ -2,14 +2,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('global.users.title')</h3>
-    <p>
-        <a href="{{ route('admin.users.create') }}" class="btn btn-success">@lang('global.app_add_new')</a>
-    </p>
-
+    <h3 class="fa fa-users"> Users Management</h3>
+  
     <div class="panel panel-default">
         <div class="panel-heading">
-            @lang('global.app_list')
+            <a href="{{ route('admin.users.create') }}" class="btn btn-success">Add User</a>
         </div>
 
         <div class="panel-body table-responsive">
@@ -17,7 +14,7 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
-
+                        <th>S.No</th>
                         <th>@lang('global.users.fields.name')</th>
                         <th>@lang('global.users.fields.email')</th>
                         <th>@lang('global.users.fields.roles')</th>
@@ -27,11 +24,12 @@
                 </thead>
                 
                 <tbody>
+                <?php $i=1;?>
                     @if (count($users) > 0)
                         @foreach ($users as $user)
                             <tr data-entry-id="{{ $user->id }}">
                                 <td></td>
-
+                                <td><?= $i++;?></td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
@@ -40,13 +38,13 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.users.edit',[$user->id]) }}" class="btn btn-xs btn-info">@lang('global.app_edit')</a>
+                                    <a href="{{ route('admin.users.edit',[$user->id]) }}" class="btn btn-md btn-success fa fa-pencil">@lang('global.app_edit')</a>
                                     {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("global.app_are_you_sure")."');",
                                         'route' => ['admin.users.destroy', $user->id])) !!}
-                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-md btn-danger')) !!}
                                     {!! Form::close() !!}
                                 </td>
 
@@ -64,7 +62,7 @@
 @stop
 
 @section('javascript') 
-    <script>
+   <!--  <script>
         window.route_mass_crud_entries_destroy = '{{ route('admin.users.mass_destroy') }}';
-    </script>
+    </script> -->
 @endsection
