@@ -17,6 +17,32 @@ $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 $this->post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.password.reset');
 
 //Configuration
+Route::get('/configuration','ConfigurationController@index');
+Route::get('/addconfiguration','ConfigurationController@create');
+Route::post('/addconfiguration/save','ConfigurationController@store');
+Route::get('/configuration/delete-config/{id}','ConfigurationController@destroy');
+Route::get('/configuration/edit-config/{id}','ConfigurationController@edit');
+Route::post('/configuration/update','ConfigurationController@update');
+
+//Vouchers Route
+Route::get('/voucher','GiftvouchersController@index');
+Route::get('/addvoucher','GiftvouchersController@create');
+Route::post('/generatevoucher','GiftvouchersController@store');
+Route::get('/voucher/view/{id}','GiftvouchersController@show');
+Route::get('/voucher/delete/{id}','GiftvouchersController@destroy');
+Route::get('/voucher/details/{id}','GiftvouchersController@print');
+
+//Member Route
+Route::get('/member','MembersController@index')->name('member.index');
+Route::get('/add-member','MembersController@create');
+Route::post('/add-member/save','MembersController@store');
+Route::get('/member/delete/{id}','MembersController@destroy');
+Route::get('/member/edit/{id}','MembersController@edit');
+Route::get('/member/member-pdf/{id}','MembersController@memberPDF');
+Route::get('/member/member-receipt/{id}','MembersController@memberReceipt');
+
+
+
 
 
 

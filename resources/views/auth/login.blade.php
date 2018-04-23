@@ -1,6 +1,7 @@
 @extends('layouts.auth')
 
 @section('content')
+<body background="https://www.pwc.com/sg/en/assets/images/hero-sg-lg-working-capital.jpg">
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -86,4 +87,6 @@
         </div>
     </div>
     </div>
+    </body>
 @endsection
+

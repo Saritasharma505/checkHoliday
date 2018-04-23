@@ -54,43 +54,43 @@
             
             <!-- Menu Bar -->
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="">
-                    <i class="fa fa-commenting"></i>
+                <a href="{{url('/configuration')}}">
+                    <i class="fa fa-cog"></i>
                     <span class="title">Configrution</span>
                 </a>
             </li>
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="">
+                <a href="{{url('/member')}}">
                     <i class="fa fa-users"></i>
                     <span class="title">Members</span>
                 </a>
             </li>
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="">
+                <a href="{{url('/voucher')}}">
                     <i class="fa fa-gift"></i>
                     <span class="title">Voucher</span>
                 </a>
             </li>
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="">
+                <a href="#">
                     <i class="fa fa-plane"></i>
                     <span class="title">Holiday Request</span>
                 </a>
             </li>
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="">
+                <a href="#">
                     <i class="fa fa-credit-card"></i>
                     <span class="title">Payment Update</span>
                 </a>
             </li>
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="">
+                <a href="#">
                     <i class="fa fa-cc-mastercard"></i>
                     <span class="title">AMC Update</span>
                 </a>
             </li>
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="">
+                <a href="#">
                     <i class="fa fa-commenting"></i>
                     <span class="title">Customer Support</span>
                 </a>
