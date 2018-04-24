@@ -557,6 +557,21 @@
                                    </div> 
                                 </div>
                             </div>
+                            <!-- Payment Table -->  
+                             <div class="row">
+                                <div class="col-md-6">
+                                   <div class="form-group">
+                                      <input type="hidden" name="payDate" id="payDate" value="<?php echo date("Y-m-d")?>"> 
+                                   </div> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                   <div class="form-group">
+                                      <input type="hidden" name="txnID" id="txnID" value="pradeep"> 
+                                   </div> 
+                                </div>
+                            </div>
 
                                             <input type="submit" id="submit" name="submit" class="btn btn-success right" value="Save"> 
                                           </div>

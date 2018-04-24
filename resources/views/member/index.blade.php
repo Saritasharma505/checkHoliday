@@ -81,7 +81,7 @@
            <a  class="fa fa-pencil btn btn-primary"  title="Edit Details" href="{{url('/member/edit')}}/<?= $info->id;?>"></a>
            <a class="fa fa-trash btn btn-danger" onclick="return confirm('Are You Sure You Want to Delete Voucher')" href="{{url('/member/delete')}}/<?= $info->id;?>"></a>
            <a  class="fa fa-print btn btn-success" title="PDF Print" href="{{url('/member/member-pdf')}}/<?= $info->id;?>"></a>
-           <a  class="fa fa-copy btn btn-warning" title="Receipt Print" href="{{url('/member/member-receipt')}}/<?= $info->id;?>"></a>
+           <a  class="fa fa-copy btn btn-warning" title="Receipt Print" href="{{url('/member/member-receipt')}}/<?= $info->memberShipid;?>"></a>
 
            </td>
         </tr>

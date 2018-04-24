@@ -71,22 +71,23 @@
                     <span class="title">Voucher</span>
                 </a>
             </li>
-            <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="#">
-                    <i class="fa fa-plane"></i>
-                    <span class="title">Holiday Request</span>
-                </a>
-            </li>
+            
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="#">
+                <a href="{{url('/payment')}}">
                     <i class="fa fa-credit-card"></i>
                     <span class="title">Payment Update</span>
                 </a>
             </li>
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="#">
+                <a href="{{url('/amc')}}">
                     <i class="fa fa-cc-mastercard"></i>
                     <span class="title">AMC Update</span>
+                </a>
+            </li>
+            <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
+                <a href="#">
+                    <i class="fa fa-plane"></i>
+                    <span class="title">Holiday Request</span>
                 </a>
             </li>
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">

@@ -4,6 +4,7 @@ use DB;
 use App\Configuration;
 use Illuminate\Http\Request;
 use App\Member;
+use App\Memberpayment;
 class MembersController extends Controller
 {
 /**
@@ -108,6 +109,10 @@ $manager_name =$request->input('manager_name');
 $dsa_id =$request->input('dsa_id');
 $dsa_name =$request->input('dsa_name');
 $member_offer =$request->input('member_offer');
+$payDate =$request->input('payDate');
+$txnID = $request->input('txnID');
+$save = substr($txnID, 0,6);
+$word = $save.rand(000000000,999999999);
 
 if ($dob2 == '') {
 $dob2 = NULL;
@@ -186,6 +191,8 @@ $data = DB::insert("INSERT INTO `members`(`memberShipid`, `a_no`, `m_name`, `dob
 
 $a=DB::insert("INSERT INTO `sequences`(`status`) VALUES ('0')");
 
+$paymentSave = DB::Insert("INSERT INTO `memberpayments`(`txnID`, `memberShipid`, `mode_of_payment`, `initial_payment`, `payDate`,`m_name`,`dsa_name`) VALUES ('$word','$memberShipiddata','$mode_of_payment', '$initial_payment','$payDate','$m_name','$dsa_name');");
+
 return redirect()->route('member.index');
 }
 /**
@@ -241,7 +248,8 @@ public function memberPDF($id)
 
 public function memberReceipt($id)
 {
-	$memberInfo = Member::where('id',$id)->get();
-	return view('member.receipt', compact('memberInfo'));
+	$memberInfo = Member::where('memberShipid',$id)->get();
+	$paymentInfo = Memberpayment::where('memberShipid', $id)->get();
+	return view('member.receipt', compact('memberInfo','paymentInfo'));
 }
 }

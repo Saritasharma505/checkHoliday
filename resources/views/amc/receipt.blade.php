@@ -9,7 +9,7 @@
      <div class="col-lg-12">
       <div class="panel panel-default">
        <div class="panel-heading">
-          <a href="{{URl('member')}}"><button type="button" class="btn btn-success">Back </button></a>
+          <a href="{{URl('payment')}}"><button type="button" class="btn btn-success">Back </button></a>
           <button type="button" class="btn btn-success" onclick="voucherPrint()">Print this page</button>
        </div>
       <!-- /.panel-heading -->
@@ -17,10 +17,7 @@
 	
       
   <div class="section">
-    <?php foreach($memberInfo as $info){ ?>
-    <?php foreach ($paymentInfo as $receipt) {?>
-      
-   
+    @foreach($receiptPayment as $info)
      <div>
       <div class="section2">
         <label><img src="http://theholidaysclubs.com/resource/img/logo.png" height="50px"></label>
@@ -35,32 +32,20 @@
       
 			  <div class="section1">  
 			      
-			      <center><label style="margin-top:7px;">  Receipt :<b><?= $receipt->txnID;?></b> </label></center>
+			      <center><label style="margin-top:7px;">  Receipt :<b><?= $info->txnID;?></b> </label></center>
 			    </div>
   </div>
     
     <div class="section3">
-    Membership : <b><?= $info->memberShipid;?></b>
+    Membership : <b><?= $info->member_id;?></b>
     <p>We acknowledge the receipt of the following on account of Membership taken of Clubholidays And Resorts (OPC) Pvt. Ltd.</p>
     <p>
         Agreement No: <br/>
-        Location: <b><?= $info->city;?></b><br/>
-        Cash/Card/Online/Cheque:<b><?= $info->mode_of_payment;?></b><br/>
-    Main Applicant Name:<b><?= $info->m_name;?></b><br/>
+        Location: <b></b><br/>
+        Cash/Card/Online/Cheque:<b>Cash</b><br/>
+    Main Applicant Name:<b><?= $info->name;?></b><br/>
     </p>
 
-    <div style="margin-left: 300px; margin-top: -87px;">
-      <table>
-                <tr>
-                  <th> User Name:.</th>
-                  <th> Password:.</th>
-                </tr>
-                <tr>
-                  <td><?= $info->email;?></td>
-                  <td><?= $info->password;?></td>
-                </tr>
-              </table>
-    </div>
     </div><br/>
     
     
@@ -76,7 +61,7 @@
         </tr>
         <tr>
           <td>Initial Deposit </td>
-          <td><?= $info->initial_payment;?></td>
+          <td></td>
         </tr>
         <tr>
           <td>EMI (For the month of)</td>
@@ -96,11 +81,11 @@
     </tr>
     <tr>
       <td>Maintenance Charge</td>
-      <td><?= $info->amc;?></td>
+      <td></td>
     </tr>
     <tr>
       <td>Full & Final/ Part Payment</td>
-      <td></td>
+      <td><?= $info->amount;?></td>
     </tr>
     <tr>
       <td>Others (Specify)</td>
@@ -108,11 +93,11 @@
     </tr>
     <tr>
       <td>Total (Non Refundable)</td>
-      <td><?= $info->total_amount;?></td>
+      <td><?= $info->amount;?></td>
     </tr>
     <tr>
       <td>Balance Due</td>
-      <td><?= $info->bal;?></td>
+      <td></td>
     </tr>
       </table>
     </form>
@@ -140,7 +125,9 @@
   
 	
  			 </div>
- 			 <?php }}?>
+       <?php break;?>
+ 			@endforeach
+
  </div>
  </div>
  </div>
