@@ -61,7 +61,7 @@
 				      </select>
 				    </div>
 				     <div class="col-lg-5">
-				     <input type="hidden" class="form-control" id="paymentDate" name="paymentDate" value="<?php echo date("Y-m-d")?>">
+				     <input type="hidden" class="form-control" id="amcDate" name="amcDate" value="<?php echo date("Y-m-d")?>">
 				    </div>
 				
 				</div>

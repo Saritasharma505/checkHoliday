@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Configuration;
 use App\Amc;
+use PDF;
 
 class AmcController extends Controller
 {
@@ -48,7 +49,7 @@ class AmcController extends Controller
         $txnID = $request->input('txnID');
         $save = substr($txnID, 0,6);
         $word = $save.rand(000000000,999999999);
-        $amcDate =$request->input('amcDate');
+        $amcDate =$request->input('amcDate'); 
 
       $data = DB::Insert("INSERT INTO `amcs`(`member_id`, `name`, `email`, `mobile`, `amount`, `dsa_assigned`, `txnID`, `amcDate`) VALUES ('$member_id','$name', '$email', '$mobile', '$amount', '$dsa_assigned','$word', '$amcDate'); ");
       
@@ -103,7 +104,16 @@ class AmcController extends Controller
 
     public function amcReceipt($id)
     {
-        // $receiptAmc = Amc::where('txnID',$id)->get();
-        return view('amc.receipt');
+        $amcReceipt = Amc::where('member_id', $id)->get();
+        return view('amc.receipt', compact('amcReceipt'));
     }
+
+    // public function pdfview(Request $request, $id)
+    // {
+    //     PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+    //     $amcPdf =Amc::where('member_id', $id)->get();
+    //     $pdf = PDF::loadView('amc.receiptPdf', compact('amcPdf'));
+
+    //     return $pdf->download('amc.receiptPdf.pdf');
+    // }
 }

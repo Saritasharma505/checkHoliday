@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="fa fa-briefcase"> Role Management</h3>
+    <h3 class="fa fa-cog"> Admin Configuration </h3>
    
     <div id="page-wrapper">
    <div class="row">

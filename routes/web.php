@@ -54,7 +54,13 @@ Route::get('/payment-receipt','PaymentController@paymentReceipt')->name('payment
 Route::get('/amc','AmcController@index')->name('amc.index');
 Route::get('/add-amc','AmcController@create')->name('amc.create');
 Route::post('/amc/update','AmcController@store')->name('amc.store');
-Route::get('/amc/receipt','AmcController@amcReceipt')->name('amc.amcReceipt');
+Route::get('/amc/receipt/{member_id}','AmcController@amcReceipt')->name('amc.amcReceipt');
+
+Route::get('generate-pdf/{member_id}', 'AmcController@pdfview')->name('generate-pdf');
+
+
+
+
 
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
