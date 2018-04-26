@@ -48,7 +48,7 @@
             <th class="text-center">Executive Name</th>
             <th class="text-center">Manager Name</th>
             <th  style="padding-right: 265px; text-align:center;">Extra Offer</th>
-            <th style="padding-left: 85px;padding-right: 60px;">Actions</th>
+            <th style="padding-left: 100px;padding-right: 80px;">Actions</th>
 
         </tr>
     </thead>
@@ -82,7 +82,7 @@
            <a class="fa fa-trash btn btn-danger" onclick="return confirm('Are You Sure You Want to Delete Voucher')" href="{{url('/member/delete')}}/<?= $info->id;?>"></a>
            <a  class="fa fa-print btn btn-success" title="PDF Print" href="{{url('/member/member-pdf')}}/<?= $info->id;?>"></a>
            <a  class="fa fa-copy btn btn-warning" title="Receipt Print" href="{{url('/member/member-receipt')}}/<?= $info->memberShipid;?>"></a>
-
+           <a  class="fa fa-download btn btn-info" title="Download Agreement" href="{{url('/member/download-agreement')}}/<?= $info->id;?>"></a>
            </td>
         </tr>
  @endforeach

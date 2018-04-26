@@ -40,7 +40,7 @@ Route::get('/member/delete/{id}','MembersController@destroy');
 Route::get('/member/edit/{id}','MembersController@edit');
 Route::get('/member/member-pdf/{id}','MembersController@memberPDF');
 Route::get('/member/member-receipt/{id}','MembersController@memberReceipt');
-
+Route::get('/member/download-agreement/{id}', 'MembersController@agreementDownload')->name('download-agreement');  
 
 //Payment Route
 
@@ -59,6 +59,33 @@ Route::get('download-pdf/{member_id}', 'AmcController@downloadPDF')->name('downl
 
 //Holiday Route
 Route::get('/holiday','HolidayController@index')->name('holiday.index');
+
+
+
+//location routes
+Route::get('/locations','LocationController@index')->name('location.index');
+Route::get('/locations/location-delete/{id}','LocationController@destroy')->name('location.destroy');
+Route::get('/locations/location-edit/{id}','LocationController@edit')->name('location.edit');
+Route::get('/locations/create-location','LocationController@create')->name('location.create');
+Route::post('/locations/store-location','LocationController@store')->name('location.store');
+Route::post('/locations/update-location','LocationController@update')->name('location.update');
+
+Route::get('/locations/venue-detail/{id}','VenueController@index')->name('index');
+Route::get('/locations/venue-create/{id}','VenueController@create')->name('venue.create');
+Route::get('/locations/venue-delete/{id}','VenueController@destroy')->name('venue.destroy');
+Route::get('/locations/venue-edit/{id}','VenueController@edit')->name('venue.edit');
+Route::post('/locations/venue-add','VenueController@sub_location')->name('venue.store');
+Route::post('/locations/venue-update','VenueController@update')->name('venue.update');
+Route::get('/admin/venue/datashow/{id}','VenueController@create')->name('create');
+
+//customer support routes
+Route::get('admin/customersupport','CustomerController@index')->name('index');
+Route::get('admin/customer-view-message/{id}','CustomerController@view')->name('view');
+Route::get('admin/customer-view-message-show/{id}','CustomerController@message')->name('message');
+Route::post('admin/send-message-user-admin-member','CustomerController@create')->name('create');
+Route::get('admin/complain','CustomerController@complainform')->name('complainform');
+Route::post('admin/complain-user-record-detail','CustomerController@complainadd')->name('complainadd');
+Route::get('admin/customer-view-message-show-single/{id}','CustomerController@single')->name('single');
 
 
 

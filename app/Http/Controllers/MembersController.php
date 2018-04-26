@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Member;
 use App\Memberpayment;
 use App\Cashdetails;
+use PDF;
 class MembersController extends Controller
 {
 /**
@@ -307,5 +308,13 @@ public function memberReceipt($id)
 	$memberInfo = Member::where('memberShipid',$id)->get();
 	$paymentInfo = Memberpayment::where('memberShipid', $id)->get();
 	return view('member.receipt', compact('memberInfo','paymentInfo'));
+}
+
+  public function agreementDownload(Request $request,$id)
+{
+  $memberInfo = Member::where('id',$id)->get();
+  
+  $pdf = PDF::loadView('member.downloadAgreement',compact('memberInfo'));
+  return $pdf->download('downloadAgreement.pdf');
 }
 }

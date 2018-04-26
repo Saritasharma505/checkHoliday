@@ -60,6 +60,12 @@
                 </a>
             </li>
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
+                <a href="{{url('/locations')}}">
+                    <i class="fa fa-map-marker"></i>
+                    <span class="title">Location</span>
+                </a>
+            </li>
+            <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{url('/member')}}">
                     <i class="fa fa-users"></i>
                     <span class="title">Members</span>
@@ -91,7 +97,7 @@
                 </a>
             </li>
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="#">
+                <a href="{{url('admin/customersupport')}}">
                     <i class="fa fa-commenting"></i>
                     <span class="title">Customer Support</span>
                 </a>
