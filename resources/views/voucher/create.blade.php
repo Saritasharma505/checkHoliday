@@ -31,7 +31,7 @@
 
 				    <div class="col-lg-5">
 				      <label for="mobno">Mobile No</label>
-                      <input type="text" class="form-control required" id="mobno"  name="mobno" maxlength="10" required>
+                      <input type="number" class="form-control required" id="mobno"  name="mobno" maxlength="10" required>
 				    </div>
 
 				    <div class="col-lg-5">

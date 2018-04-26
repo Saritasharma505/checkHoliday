@@ -108,12 +108,13 @@ class AmcController extends Controller
         return view('amc.receipt', compact('amcReceipt'));
     }
 
-    // public function pdfview(Request $request, $id)
-    // {
-    //     PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-    //     $amcPdf =Amc::where('member_id', $id)->get();
-    //     $pdf = PDF::loadView('amc.receiptPdf', compact('amcPdf'));
+    public function downloadPDF($id)
 
-    //     return $pdf->download('amc.receiptPdf.pdf');
-    // }
+    {
+        $amcPrint = Amc::where('member_id', $id)->get();
+        $pdf = PDF::loadView('amc.receiptPdf', compact('amcPrint'));
+
+        return $pdf->download('Amcpaymentreceipt.pdf');
+
+    }
 }

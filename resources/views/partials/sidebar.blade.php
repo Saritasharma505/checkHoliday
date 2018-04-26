@@ -85,7 +85,7 @@
                 </a>
             </li>
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="#">
+                <a href="{{url('/holiday')}}">
                     <i class="fa fa-plane"></i>
                     <span class="title">Holiday Request</span>
                 </a>
@@ -96,6 +96,47 @@
                     <span class="title">Customer Support</span>
                 </a>
             </li>
+
+           <!--  Report Details -->
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-binoculars"></i>
+                    <span class="title">All Reports</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    <li class="{{ $request->segment(2) == 'permissions' ? 'active active-sub' : '' }}">
+                        <a href="#">
+                            <i class="fa fa-child"></i>
+                            <span class="title">
+                                Member Report
+                            </span>
+                        </a>
+                    </li>
+                    <li class="{{ $request->segment(2) == 'roles' ? 'active active-sub' : '' }}">
+                        <a href="#">
+                            <i class="fa fa-credit-card"></i>
+                            <span class="title">
+                                AMC Report
+                            </span>
+                        </a>
+                    </li>
+                    <li class="{{ $request->segment(2) == 'users' ? 'active active-sub' : '' }}">
+                        <a href="#">
+                            <i class="fa fa-credit-card-alt"></i>
+                            <span class="title">
+                                Payment Report
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+           <!--  end Report -->
+
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{ route('auth.change_password') }}">
                     <i class="fa fa-key"></i>

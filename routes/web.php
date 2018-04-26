@@ -55,8 +55,10 @@ Route::get('/amc','AmcController@index')->name('amc.index');
 Route::get('/add-amc','AmcController@create')->name('amc.create');
 Route::post('/amc/update','AmcController@store')->name('amc.store');
 Route::get('/amc/receipt/{member_id}','AmcController@amcReceipt')->name('amc.amcReceipt');
+Route::get('download-pdf/{member_id}', 'AmcController@downloadPDF')->name('downloadPDF');
 
-Route::get('generate-pdf/{member_id}', 'AmcController@pdfview')->name('generate-pdf');
+//Holiday Route
+Route::get('/holiday','HolidayController@index')->name('holiday.index');
 
 
 

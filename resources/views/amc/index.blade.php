@@ -38,7 +38,7 @@
             <th class="text-center">DSA</th>
             <th class="text-center">Receipt No</th>
             <th class="text-center">Pay Date</th>
-            <th class="text-center">Action</th>
+            <th style="padding-left: 25px;padding-right: 40px;">Action</th>
                        
         </tr>
     </thead>
@@ -54,8 +54,8 @@
             <td><?= $info->dsa_assigned;?></td>
             <td><?= $info->txnID;?></td>
             <td><?= $info->amcDate;?></td>
-            <td><a href="{{url('/amc/receipt')}}/<?= $info->member_id;?>" class="fa fa-copy btn btn-success"> Print</a></td>
-         <!--    <td><a href="{{url('generate-pdf')}}/<?= $info->member_id;?>" class="fa fa-copy btn btn-success"> View PDF</a></td> -->
+            <td><a href="{{url('/amc/receipt')}}/<?= $info->member_id;?>" class="fa fa-print btn btn-success"></a>
+            <a href="{{url('download-pdf')}}/<?= $info->member_id;?>" class="fa fa-download btn btn-success"> </a></td>
         </tr>
   <?php } ?>
          </tbody>

@@ -5,6 +5,7 @@ use App\Configuration;
 use Illuminate\Http\Request;
 use App\Member;
 use App\Memberpayment;
+use App\Cashdetails;
 class MembersController extends Controller
 {
 /**
@@ -193,6 +194,8 @@ $a=DB::insert("INSERT INTO `sequences`(`status`) VALUES ('0')");
 
 $paymentSave = DB::Insert("INSERT INTO `memberpayments`(`txnID`, `memberShipid`, `mode_of_payment`, `initial_payment`, `payDate`,`m_name`,`dsa_name`) VALUES ('$word','$memberShipiddata','$mode_of_payment', '$initial_payment','$payDate','$m_name','$dsa_name');");
 
+// $b=DB::insert("INSERT INTO cashrecord(`membershipid`,`bank_name`,`card_type`, `card_holder_name`, `card_amount`, `card_number_digits`, `cash_amount`, `online_amount`, `cash_card_amount`, `cheque_holder_name`, `cheque_number_digits`, `cheque_amount`)VALUES('$memberShipid','$bank_name','$card_type','$card_holder_name','$card_amount','$card_number_digits','$cash_amount','$online_amount','$cash_card_amount',$cheque_holder_name','$cheque_number_digits','$cheque_amount')");
+
 return redirect()->route('member.index');
 }
 /**
@@ -214,6 +217,9 @@ public function show($id)
 public function edit($id)
 {
 	$editMember = Member::where('id', $id)->get();
+	// $editMember=DB::table('members')
+ //            ->join('cashrecord', 'members.memberShipid', '=', 'cashrecord.membershipid')->select('*')->get();
+            // dd($editMember);
 	return view('member.edit', compact('editMember'));
 }
 /**
@@ -225,7 +231,57 @@ public function edit($id)
 */
 public function update(Request $request, $id)
 {
-//
+	$memberShipiddata = $request->input('memberShipiddata');
+  $a_no = $request->input('a_no');
+  $m_name = $request->input('m_name');
+  $dob1 = $request->input('dob1');
+  $c_name = $request->input('c_name');
+  $dob2 = $request->input('dob2');
+  $firstNomineeName = $request->input('firstNomineeName');
+  $firstNDob = $request->input('firstNDob');
+  $secondNomineeName = $request->input('secondNomineeName');
+  $secondNDob = $request->input('secondNDob');
+  $thirdNomineeName = $request->input('thirdNomineeName');
+  $thirdNDob = $request->input('thirdNDob');
+  $address = $request->input('address');
+  $city = $request->input('city');
+  $pin = $request->input('pin');
+  $mob1 = $request->input('mob1');
+  $mob2 = $request->input('mob2');
+  $r_no = $request->input('');
+  $email = $request->input('r_no');
+  $doj = $request->input('doj');
+  $tenure = $request->input('tenure');
+  $vdate = $request->input('vdate');
+  $ctype = $request->input('ctype');
+  $apartment = $request->input('apartment');
+  $occupancy =$request->input('occupancy');
+  $days = $request->input('days');
+  $purchase_amount = $request->input('purchase_amount');
+  $admin_amount =$request->input('admin_amount');
+  $total_amount = $request->input('total_amount');
+  $initial_payment =$request->input('initial_payment');
+  $mode_of_payment = $request->input('mode_of_payment');
+  $bal = $request->input('bal');
+  $bal_payment = $request->input('bal_payment');
+  $no_of_emi = $request->input('no_of_emi');
+  $emi_amount = $request->input('emi_amount');
+  $emi_start_date = $request->input('emi_start_date');
+  $amc = $request->input('amc');
+  $excutive_name = $request->input('excutive_name');
+  $manager_name = $request->input('manager_name');
+  $dsa_name = $request->input('dsa_name');
+  $moffer = $request->input('moffer');
+  $dsa_id = $request->input('dsa_id');
+  $id = $request->input('');
+  Member::where('memberShipid',$memberShipiddata)->update(['a_no' => $a_no, 'm_name' => $m_name, 'dob1' => $dob1, 'c_name' => $c_name, 'dob2' => $dob2, 'firstNomineeName' => $firstNomineeName, 'firstNDob' => $firstNDob, 'secondNDob' => $secondNDob, 'thirdNomineeName' => $thirdNomineeName, 'thirdNDob' => $thirdNDob, 'city' => $city, 'pin' => $pin, 'mob1' => $mob1, 'mob2' => $mob2, 'r_no' => $r_no, 'email' => $email, 'doj' => $doj, 'tenure' => $tenure, 'vdate' => $vdate, 'apartment' => $apartment, 'occupancy' => $occupancy, 'purchase_amount' => $purchase_amount, 'admin_amount' => $admin_amount, 'total_amount' => $total_amount, 'initial_payment' => $initial_payment, 'mode_of_payment_details' => $mode_of_payment_details, 'no_of_emi' => $no_of_emi, 'emi_start_date' => $emi_start_date, 'amc' => $amc, 'excutive_name' => $excutive_name, 'manager_name' => $manager_name, 'dsa_id' => $dsa_id, 'member_offer' => $member_offer]);
+
+     
+  Cashdetails::where('id',$id)->update(['bank_name' => $bank_name, 'card_type' => $card_type, 'card_holder_name' => $card_holder_name, 'card_amount' => $card_amount, 'card_number_digits' => $card_number_digits, 'cash_amount' => $cash_amount, 'online_amount' => $online_amount, 'cash_card_amount' => $cash_card_amount, 'cheque_holder_name' => $cheque_holder_name, 'cheque_number_digits' => $cheque_number_digits, 'cheque_amount' => $cheque_amount]);
+  
+	
+	return redirect()->route('member.index');
+	
 }
 /**
 * Remove the specified resource from storage.

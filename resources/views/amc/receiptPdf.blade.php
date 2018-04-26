@@ -1,16 +1,10 @@
-@inject('request', 'Illuminate\Http\Request')
-@extends('layouts.app')
-
-@section('content')
-    <h1 class="fa fa-cc-mastercard">&nbsp; Amc Receipt PDF</h1>
 
 <div id="page-wrapper">
    <div class="row">
      <div class="col-lg-12">
       <div class="panel panel-default">
        <div class="panel-heading">
-          <a href="{{URl('amc')}}"><button type="button" class="btn btn-success">Back </button></a>
-          <a href="{{ route('generate-pdf',['download'=>'pdf']) }}">Download PDF</a>
+          
        </div>
       <!-- /.panel-heading -->
 			 <div class="panel-body">
@@ -22,28 +16,33 @@
       <div class="section2">
         <label><img src="http://theholidaysclubs.com/resource/img/logo.png" height="50px"></label>
       </div>
-        
+        <?php
+                    if(!empty($amcPrint))
+                    {
+                        foreach($amcPrint as $amcPrint)
+                        {
+                    ?>
             <div class="section4">
 		        CLUBHOLIDAYS AND RESORTS (OPC) PVT. LTD.</br>
 		        Mail: <b>info@theholidaysclubs.com </b><br/>
 		        Website: <b>www.theholidaysclubs.com</b><br/>
-		        Date:<b> </b><br/>
+		        Date:<b> {{$amcPrint->amcDate}};</b><br/>
           </div>
       
 			  <div class="section1">  
 			      
-			      <center><label style="margin-top:7px;">  Receipt :<b></b> </label></center>
+			      <center><label style="margin-top:7px;">  Receipt :<b><?= $amcPrint->txnID;?></b> </label></center>
 			    </div>
   </div>
     
     <div class="section3">
-    Membership : <b></b>
+    Membership : <b><?= $amcPrint->member_id;?></b>
     <p>We acknowledge the receipt of the following on account of Membership taken of Clubholidays And Resorts (OPC) Pvt. Ltd.</p>
     <p>
         Agreement No: <br/>
         Location: <b></b><br/>
         Cash/Card/Online/Cheque: <b>Cash</b><br/>
-    Main Applicant Name:<b> </b><br/>
+    Main Applicant Name:<b> <?= $amcPrint->name;?></b><br/>
     </p>
 
     </div><br/>
@@ -81,7 +80,7 @@
     </tr>
     <tr>
       <td>Maintenance Charge</td>
-      <td></td>
+      <td><?= $amcPrint->amount;?></td>
     </tr>
     <tr>
       <td>Full & Final/ Part Payment</td>
@@ -131,18 +130,11 @@
  </div>
  </div>
  </div>
- 
+<?php }}?>
 
 
-@stop
-@section('javascript')
-<script>
-function voucherPrint() {
-    window.print();
-}
-</script>
 
- <style>
+<style>
     
     .section{
     width:100%;
@@ -206,4 +198,4 @@ function voucherPrint() {
     }
 
     </style>
-    @endsection
+    

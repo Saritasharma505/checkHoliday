@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="fa fa-users">&nbsp; Add Member </h1>
+<h1 class="fa fa-users">&nbsp; Edit Member Details </h1>
 
 <div id="page-wrapper">
     <div class="row">
@@ -18,6 +18,8 @@
                             <div class="col-md-8">
                                 <form action="{{ url('/add-member/save')}}" name="memberForm" method="post" id="addUser" role="form">
                                     {{csrf_field()}}
+
+                                    <?php foreach($editMember as $editInfo){ ?>
                                      <div class="tabbable">
                                         <ul class="nav nav-tabs">
                                           <li class="active"><a href="#tab1" data-toggle="tab">Personal Information</a></li>
@@ -35,8 +37,8 @@
                                                 <div class="col-md-6">                                
                                                     <div class="form-group">
                                                       <label>Membership Id</label>
-                                                      <input type="text" class="form-control" id="memberShipid" name="memberShipiddata" readonly>
-                                                   <input type="hidden" name="last_id" value="<?php echo $sequencesNo[0]->id;?>"> 
+                                                      <input type="text" class="form-control" id="memberShipid" name="memberShipiddata" value="<?= $editInfo->memberShipid;?>">
+                                                  
                                                     </div>                         
                                                 </div>
                                                 <div class="col-md-6">
@@ -269,11 +271,11 @@
                                      <input type="text" class="form-control digits" id="pamount"  name="purchase_amount" value="<?php //echo set_value('pamount'); ?>">  
                                     </div>                         
                                 </div>
-                                <?php foreach($adminAmount as $amount){?>
+                                
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Admin Amount</label>
-                                        <input type="text" class="form-control digits" id="aamount" name="admin_amount" value="<?= $amount->adminAmount;?>">
+                                        <input type="text" class="form-control digits" id="aamount" name="admin_amount" value="">
                                     </div>
                                 </div>
                                   <div class="col-md-4">
@@ -446,7 +448,6 @@
                                     <label>Cheque Holder Name:</label><br/><br/>
                                      <label>Cheque Number:</label><br/><br/>
                                     <label>Cheque Amount:</label> 
-                                    
                                     </div>
                                  </div> 
                                  <div class="col-md-6">
@@ -515,10 +516,10 @@
                                     <div class="form-group">
                                     
                                         <label>AMC(Amount)</label>
-                                        <input type="text" class="form-control digits" id="amc" name="amc" value="<?= $amount->amcAmount; ?>">
+                                        <input type="text" class="form-control digits" id="amc" name="amc" value="">
                                     </div>
                                 </div>
-                                <?php }?>
+                               
                             </div>
                              <div class="row">
                                 <div class="col-md-6">                                
@@ -558,26 +559,12 @@
                                    </div> 
                                 </div>
                             </div>
-                            <!-- Payment Table -->  
-                             <div class="row">
-                                <div class="col-md-6">
-                                   <div class="form-group">
-                                      <input type="hidden" name="payDate" id="payDate" value="<?php echo date("Y-m-d")?>"> 
-                                   </div> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                   <div class="form-group">
-                                      <input type="hidden" name="txnID" id="txnID" value="pradeep"> 
-                                   </div> 
-                                </div>
-                            </div>
 
                                             <input type="submit" id="submit" name="submit" class="btn btn-success right" value="Save"> 
                                           </div>
                                         </div>
                                       </div>
+                                      <?php }?>
                                 </form>
     
                           </div>
