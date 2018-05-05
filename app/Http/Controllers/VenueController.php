@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Location;
 use DB;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 use App\Venue;
 use Illuminate\Support\Facades\Session;
 
@@ -14,7 +16,9 @@ class VenueController extends Controller
     
     public function index($id)
     {
-
+          if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
         $venue_loc = Venue::where('location_id',$id)->get();
        $locations = Location::where('id',$id)->get();
        $id= $id;
@@ -26,6 +30,9 @@ class VenueController extends Controller
     public function create($id)
     {
         //echo $id;
+          if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
          $venue_loc = Venue::where('id',$id)->get();
          $location = Location::where('id',$id)->get();
 
@@ -55,6 +62,9 @@ class VenueController extends Controller
 
     public function edit($id)
     {
+         if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
         $edit_location=DB::table('locations')->get();
         $edit_venue=Location::where('id',$id)->get();
         
@@ -64,6 +74,9 @@ class VenueController extends Controller
     
     public function update(Request $request)
     {
+        if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
         $id=$request->input('id');
         $locationName=$request->input('locationName');
        $parent_id=$request->input('parent_id');
@@ -75,6 +88,10 @@ class VenueController extends Controller
 
     public function destroy($id)
     {
+
+        if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
        $data=Venue::where('id',$id)->delete();
        
         Session::flash('message','Record Deleted Sucessfully');
@@ -82,6 +99,10 @@ class VenueController extends Controller
     }
     public function sub_location(Request $req)
     {
+       
+          if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
         $a=$req->input('locationName');
         $b=$req->input('sub_location');
         $c=$req->input('id');

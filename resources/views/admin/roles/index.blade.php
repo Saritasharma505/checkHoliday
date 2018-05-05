@@ -15,9 +15,9 @@
                     <tr>
                         <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
                         <th>S.No</th>
-                        <th>@lang('global.roles.fields.name')</th>
+                        <th width="10%">Role Name</th>
                         <th>@lang('global.roles.fields.permission')</th>
-                        <th>&nbsp;</th>
+                        <th width="20%">Action</th>
                     </tr>
                 </thead>
                 

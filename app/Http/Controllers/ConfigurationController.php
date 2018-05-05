@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use DB;
 use App\Configuration;
-
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -16,6 +17,7 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
+       
         $configur = Configuration::all();
         return view('configuration.index', compact('configur'));
     }
@@ -27,7 +29,7 @@ class ConfigurationController extends Controller
      */
     public function create()
     {
-
+       
         return view('configuration.create');
     }
 
@@ -39,7 +41,8 @@ class ConfigurationController extends Controller
      */
     public function store(Request $request)
     {
-        
+     
+      
         $name = $request->input('name'); 
         $emailId = $request->input('emailId');
         $phone = $request->input('phone');
@@ -107,6 +110,10 @@ class ConfigurationController extends Controller
      */
     public function destroy($id)
     {
+       
+        if (! Gate::allows(' configuration_manage ')) {
+            return abort(401);
+        }
         Configuration::where('id', $id)->delete();
         Session::flash('message','Record Delete Successfully');
         return back();

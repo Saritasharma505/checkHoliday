@@ -1,9 +1,8 @@
-@include('header')
-@extends('adminlte::page')
+@inject('request', 'Illuminate\Http\Request')
 
-@section('title', 'AdminLTE')
+@extends('layouts.app')
 
-@section('content_header')
+@section('content')
 
 <div id="page-wrapper">
             

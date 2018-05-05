@@ -62,6 +62,7 @@ class CreateMembersTable extends Migration
             $table->string('dsa_name');
             $table->string('member_offer');
             $table->integer('status');
+            
             $table->timestamps();
         });
     }

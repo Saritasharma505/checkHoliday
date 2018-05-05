@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Location;
 use DB;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class LocationController extends Controller
@@ -16,6 +18,10 @@ class LocationController extends Controller
      */
     public function index()
     {
+       if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
+
         $admin_locations=Location::all();
         return view('location.index',compact('admin_locations'));
     }
@@ -27,6 +33,10 @@ class LocationController extends Controller
      */
     public function create()
     {
+      
+       if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
        return view('location.add');
     }
 
@@ -38,6 +48,10 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
+     
+       if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
       $name=$request->locationName;
         $status=$request->status;
         $data=DB::insert("insert into locations(locationName,status) values('$name','$status')");
@@ -65,6 +79,10 @@ class LocationController extends Controller
      */
     public function edit($id)
     {
+       
+       if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
         $location_edit=Location::where('id',$id)->get();
         return view('location.edit',compact('location_edit'));
     }
@@ -78,6 +96,11 @@ class LocationController extends Controller
      */
     public function update(Request $request)
     {
+         
+       if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
+
          $id = $request->input('id');
          $locationName = $request->input('locationName');
          $status = $request->input('status');
@@ -94,6 +117,11 @@ class LocationController extends Controller
      */
     public function destroy($id)
     {
+       
+       if (! Gate::allows('location_manage')) {
+            return abort(401);
+        }
+
        $data= Location::where('id',$id)->delete();
         Session::flash('message','Record Deleted Sucessfully!!');
         return redirect()->action('LocationController@index');

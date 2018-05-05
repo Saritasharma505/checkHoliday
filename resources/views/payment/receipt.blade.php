@@ -9,7 +9,7 @@
      <div class="col-lg-12">
       <div class="panel panel-default">
        <div class="panel-heading">
-          <a href="{{URl('payment')}}"><button type="button" class="btn btn-success">Back </button></a>
+          <a href="{{URl('/payment-update')}}"><button type="button" class="btn btn-success">Back </button></a>
           <button type="button" class="btn btn-success" onclick="voucherPrint()">Print this page</button>
        </div>
       <!-- /.panel-heading -->

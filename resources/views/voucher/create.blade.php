@@ -50,7 +50,7 @@
 				    </div>
 
 					<div class="col-lg-5">
-				     <input type="hidden" class="form-control" id="dog" name="dog" value="<?php echo date('Y-m-d');?>">
+				     <input type="hidden" class="form-control" id="doj" name="doj" value="<?php echo date('Y-m-d');?>">
 				    </div>
 
 				    <?php

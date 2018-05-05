@@ -21,7 +21,7 @@ class CreateVouchersTable extends Migration
             $table->text('address');
             $table->string('location');
             $table->string('vcode');
-            $table->date('dog');
+            $table->date('doj');
             $table->date('edate');
             $table->string('dsaName');
             $table->string('dsaId');

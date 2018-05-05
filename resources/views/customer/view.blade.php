@@ -1,4 +1,4 @@
-
+@inject('request', 'Illuminate\Http\Request')
 @extends('layouts.app')
 @section('content')
 
@@ -116,10 +116,10 @@
       </div>
       <!-- /.tab-pane -->
      <div class="tab-pane active" id="tab_3-2">
-       
+       <button onclick="window.history.back();" class="btn btn-primary">Back</button>
         <div class="panel panel-default">
                 <div class="panel-heading">
-                  User Complain
+                  User Complain <a href="{{url('admin/customer-view-message-show-complete')}}/<?php echo $complains[0]->member_id;?>" class="btn btn-success">Done</a>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -149,14 +149,14 @@
                                  <td><?php echo $value->subject;?></td>
                                 <td><?php echo $value->message;?></td>
                                 <?php if($value->status_red==0){?>
-                                <td colspan="2"><a class="btn btn-danger" href="{{url('admin/customer-view-message-show-single')}}/<?php echo $value->id;?>">Complain</a>
+                                <td colspan="2"><a class="btn btn-danger" href="{{url('admin/customer-view-message-show-single')}}/<?php echo $value->member_id;?>">Complain</a>
                                 </td>
 
                                 <?php } elseif($value->status_red==1){ ?>
-                                <td colspan="2"><a href="{{url('admin/customer-view-message-show-single')}}/<?php echo $value->id;?>" class="btn btn-info">Continue</a><a href="{{url('admin/customer-view-message-show')}}/<?php echo $value->id;?>" class="btn btn-danger">Done</a></td>
+                                <td colspan="2"><a href="{{url('admin/customer-view-message-show-single')}}/<?php echo $value->member_id;?>" class="btn btn-info">Continue</a></td>
                                 <?php } else{ ?>
-                                <td colspan="2"><a href="javascript:void(0);" class="btn btn-success">Done</a>
-                                  <a href="{{url('admin/customer-view-message-show-single')}}/<?php echo $value->id;?>" class="btn btn-success">Done</a>
+                                <td>
+                                  <a href="{{url('admin/customer-view-message-show-complete')}}/<?php echo $value->member_id;?>" class="btn btn-success">Complete</a>
                                 </td>
                                 <?php }?>
                                 <td><?php echo $value->created_at;?></td>

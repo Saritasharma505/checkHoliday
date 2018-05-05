@@ -22,6 +22,7 @@ class CreateMemberpaymentsTable extends Migration
             $table->string('payDate');
             $table->string('m_name');
             $table->string('dsa_name');
+             $table->foreign('memberShipid')->references('memberShipid')->on('members');
             $table->timestamps();
             
         });

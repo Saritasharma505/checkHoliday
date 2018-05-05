@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 use App\Configuration;
 use App\Amc;
 use PDF;
@@ -17,6 +19,10 @@ class AmcController extends Controller
      */
     public function index()
     {
+         if (! Gate::allows('amc_manage')) {
+            return abort(401);
+        }
+
         $amcDetails = Amc::all();
         return view('amc.index',compact('amcDetails'));
     }
@@ -28,6 +34,10 @@ class AmcController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('amc_manage')) {
+            return abort(401);
+        }
+
         $memberAmc = Configuration::all();
         return view('amc.create', compact('memberAmc'));
     }
@@ -40,6 +50,10 @@ class AmcController extends Controller
      */
     public function store(Request $request)
     {
+       if (! Gate::allows('amc_manage')) {
+            return abort(401);
+        }
+
         $member_id = $request->input('member_id');
         $name = $request->input('name');
         $email = $request->input('email');
@@ -51,9 +65,21 @@ class AmcController extends Controller
         $word = $save.rand(000000000,999999999);
         $amcDate =$request->input('amcDate'); 
 
-      $data = DB::Insert("INSERT INTO `amcs`(`member_id`, `name`, `email`, `mobile`, `amount`, `dsa_assigned`, `txnID`, `amcDate`) VALUES ('$member_id','$name', '$email', '$mobile', '$amount', '$dsa_assigned','$word', '$amcDate'); ");
+        $data=Amc::create([
+            'member_id' => $member_id,
+            'name' => $name,
+            'email' => $email,
+            'mobile' => $mobile,
+            'amount' => $amount,
+            'dsa_assigned' => $dsa_assigned,
+            'txnID' => $word,
+            'amcDate' => $amcDate,
+        ]);
+        return redirect()->route('amc.index');      
+
+      /*$data = DB::Insert("INSERT INTO `amcs`(`member_id`, `name`, `email`, `mobile`, `amount`, `dsa_assigned`, `txnID`, `amcDate`) VALUES ('$member_id','$name', '$email', '$mobile', '$amount', '$dsa_assigned','$word', '$amcDate'); ");*/
       
-      return redirect()->route('amc.index');
+    
       // return $this->paymentReceipt($word);
     }
 
@@ -76,7 +102,9 @@ class AmcController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (! Gate::allows('amc_manage')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -88,7 +116,9 @@ class AmcController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (! Gate::allows('amc_manage')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -99,11 +129,16 @@ class AmcController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (! Gate::allows('amc_manage')) {
+            return abort(401);
+        }
     }
 
     public function amcReceipt($id)
     {
+       if (! Gate::allows('amc_manage')) {
+            return abort(401);
+        }
         $amcReceipt = Amc::where('member_id', $id)->get();
         return view('amc.receipt', compact('amcReceipt'));
     }
@@ -111,10 +146,46 @@ class AmcController extends Controller
     public function downloadPDF($id)
 
     {
+        if (! Gate::allows('amc_manage')) {
+            return abort(401);
+        }
         $amcPrint = Amc::where('member_id', $id)->get();
         $pdf = PDF::loadView('amc.receiptPdf', compact('amcPrint'));
 
         return $pdf->download('Amcpaymentreceipt.pdf');
 
     }
+
+    public function amcReport(Request $request)
+    {
+       $data=Amc::all();
+        return view('report.amc.index',compact('data'));
+    }
+
+ public function reportData(Request $request){
+    //according to date 
+   $start= \Carbon\Carbon::parse($request->start_date)->format('Y-m-d');
+   $end = \Carbon\Carbon::parse($request->end_date)->format('Y-m-d');
+
+    $dsa_assigned=$request->input('dsa_assigned');
+
+   
+    if($dsa_assigned AND $start AND $end){
+     $data=DB::table('amcs')->whereBetween('amcDate', [$start, $end])->where('dsa_assigned',$dsa_assigned)->get();
+     return view('report.amc.index',compact('data')); 
+     }
+     /*elseif($start AND $end){
+        $data = DB::table('amcs')->whereBetween('amcDate', [$start, $end])->get();
+        return view('report.amc.index',compact('data')); 
+     }
+     elseif($dsa_assigned){
+        $data=  DB::table('amcs')->where('dsa_assigned',$dsa_assigned)->get();
+        return view('report.amc.index',compact('data'));
+     }
+     else{
+        $data=Amc::all();
+        return view('report.amc.index',compact('data'));
+     }*/
+  
+   }
 }

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 class HolidayController extends Controller
 {
     /**
@@ -13,6 +14,9 @@ class HolidayController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('holiday_request')) {
+            return abort(401);
+        }
         return view('holiday.index');
     }
 
@@ -23,7 +27,9 @@ class HolidayController extends Controller
      */
     public function create()
     {
-        //
+        if (! Gate::allows('holiday_request')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -34,7 +40,9 @@ class HolidayController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      if (! Gate::allows('holiday_request')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -56,7 +64,9 @@ class HolidayController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (! Gate::allows('holiday_request')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -68,7 +78,9 @@ class HolidayController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       if (! Gate::allows('holiday_request')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -79,6 +91,8 @@ class HolidayController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (! Gate::allows('holiday_request')) {
+            return abort(401);
+        }
     }
 }

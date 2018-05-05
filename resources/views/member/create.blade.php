@@ -185,7 +185,7 @@
                                 <div class="col-md-6">                                
                                     <div class="form-group">
                                       <label>Date Of Joining</label>
-                                    <input  class="form-control" id="doj" name="doj" value="<?php echo date('d/m/Y'); ?>" readonly >
+                                    <input  class="form-control" id="doj" name="doj" value="<?php echo date('y/m/d'); ?>" readonly >
                                     </div>                         
                                 </div>
                                 <div class="col-md-6">

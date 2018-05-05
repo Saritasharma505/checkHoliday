@@ -46,7 +46,7 @@
             <td><?= $i++; ?></td>
             <td><?= $viewVoucher->vcode;?></td>
             <td><?= $viewVoucher->gname;?></td>
-            <td><?= $viewVoucher->dog;?></td>
+            <td><?= $viewVoucher->doj;?></td>
             <td><?= $viewVoucher->edate;?></td>
             <td><?= $viewVoucher->dsaName;?></td>
             <td><?= $viewVoucher->location;?></td>

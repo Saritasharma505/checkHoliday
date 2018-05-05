@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 use App\Payment;
 use App\Memberpayment;
 
@@ -16,6 +18,10 @@ class PaymentController extends Controller
      */
     public function index()
     {
+        /* if (! Gate::allows(' payment_manage ')) {
+            return abort(401);
+        }
+*/
         $paymentInfo = Payment::all();
         $member = Memberpayment::all();
         //dd($member);
@@ -41,6 +47,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+
         $member_id = $request->input('member_id');
         $name = $request->input('name');
         $email = $request->input('email');
@@ -78,7 +85,9 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (! Gate::allows(' payment_manage ')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -90,7 +99,7 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
     }
 
     /**
@@ -106,7 +115,14 @@ class PaymentController extends Controller
 
     public function paymentReceipt($id)
     {
+
         $receiptPayment = Payment::where('txnID',$id)->get();
         return view('payment.receipt', compact('receiptPayment'));
+    }
+
+    public function paymentReport(Request $request)
+    {
+       $data=Payment::all();
+        return view('report.payment.index',compact('data'));
     }
 }

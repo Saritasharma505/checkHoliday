@@ -4,7 +4,13 @@ use DB;
 use App\Configuration;
 use Illuminate\Http\Request;
 use App\Member;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 use App\Memberpayment;
+use App\User;
+use App\Venue;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Cashdetails;
 use PDF;
 class MembersController extends Controller
@@ -16,8 +22,13 @@ class MembersController extends Controller
 */
 public function index()
 {
+
+       if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
+
 	$memberInfo = Member::all();
-return view('member/index', compact('memberInfo'));
+  return view('member/index', compact('memberInfo'));
 }
 /**
 * Show the form for creating a new resource.
@@ -26,6 +37,9 @@ return view('member/index', compact('memberInfo'));
 */
 public function create()
 {
+   if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
 $adminAmount = Configuration::all();
 $sequencesNo = DB::table('sequences')->orderByRaw('id DESC')->get();
 return view('member.create',compact(['adminAmount', 'sequencesNo']));
@@ -38,7 +52,9 @@ return view('member.create',compact(['adminAmount', 'sequencesNo']));
 */
 public function store(Request $request)
 {
-
+ if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
 // $memberDetails = $request->all();
 //dd($request);
 // $sequencesNo = DB::table('sequences')->orderByRaw('id DESC')->get();
@@ -188,8 +204,10 @@ if ($last_id) {
 if ($emi_start_date == '') {
 $emi_start_date = NUll;
 }
+
+/*$data1=Member::create([`memberShipid`=>$memberShipiddata,`a_no`=>$a_no, `m_name`=>$m_name, `dob1`=>$dob1, `c_name`=>$c_name, `dob2`=>$dob2, `firstNomineeName`=>$firstNomineeName, `firstNDob`=>$firstNDob, `secondNomineeName`=>$secondNomineeName, `secondNDob`=>$secondNDob, `thirdNomineeName`=>$thirdNomineeName, `thirdNDob`=>$thirdNDob, `address`=>$address, `city`=>$city, `pin`=>$pin, `mob1`=>$mob1, `mob2`=>$mob2, `r_no`=>$r_no, `email`=>$email, `password`=>$password, `hash_password`=>$hash_password, `doj`=>$doj, `tenure`=>$tenure, `vdate`=>$vdate, `ctype`=>$ctype, `apartment`=>$apartment, `occupancy`=>$occupancy, `days`=>$days, `purchase_amount`=>$purchase_amount, `admin_amount`=>$admin_amount, `total_amount`=>$total_amount, `initial_payment`=>$initial_payment, `mode_of_payment`=>$mode_of_payment, `mode_of_payment_details`=>$mode_of_payment_details, `bal`=>$bal, `bal_payment`=>$bal_payment, `no_of_emi`=>$no_of_emi, `emi_amount`=>$emi_amount, `emi_start_date`=>$emi_start_date, `amc`=>$amc, `excutive_name`=>$excutive_name, `manager_name`=>$manager_name, `dsa_id`=>$dsa_id, `dsa_name`=>$dsa_name, `member_offer`=>$member_offer, `status`=>'1']);*/
  
-$data = DB::insert("INSERT INTO `members`(`memberShipid`, `a_no`, `m_name`, `dob1`, `c_name`, `dob2`, `firstNomineeName`, `firstNDob`, `secondNomineeName`, `secondNDob`, `thirdNomineeName`, `thirdNDob`, `address`, `city`, `pin`, `mob1`, `mob2`, `r_no`, `email`, `password`, `hash_password`, `doj`, `tenure`, `vdate`, `ctype`, `apartment`, `occupancy`, `days`, `purchase_amount`, `admin_amount`, `total_amount`, `initial_payment`, `mode_of_payment`, `mode_of_payment_details`, `bal`, `bal_payment`, `no_of_emi`, `emi_amount`, `emi_start_date`, `amc`, `excutive_name`, `manager_name`, `dsa_id`, `dsa_name`, `member_offer`, `status`) VALUES ('$memberShipiddata', '$a_no', '$m_name','$dob1','$c_name', '$dob2', '$firstNomineeName',      '$firstNDob', '$secondNomineeName', '$secondNDob', '$thirdNomineeName', '$thirdNDob','$address',      '$city', '$pin', '$mob1', '$mob2', '$r_no', '$email', '$password', '$hash_password', '$doj','$tenure', '$vdate','$ctype', '$apartment', '$occupancy', '$days', '$purchase_amount', '$admin_amount', '$total_amount','$initial_payment', '$mode_of_payment', '$mode_of_payment_details', '$bal', '$bal_payment','$no_of_emi','$emi_amount', '$emi_start_date', '$amc', '$excutive_name', '$manager_name', '$dsa_id', '$dsa_name', '$member_offer','1');");
+$data = DB::insert("INSERT INTO `members`(`memberShipid`, `a_no`, `m_name`, `dob1`, `c_name`, `dob2`, `firstNomineeName`, `firstNDob`, `secondNomineeName`, `secondNDob`, `thirdNomineeName`, `thirdNDob`, `address`, `city`, `pin`, `mob1`, `mob2`, `r_no`, `email`, `password`, `hash_password`, `doj`, `tenure`, `vdate`, `ctype`, `apartment`, `occupancy`, `days`, `purchase_amount`, `admin_amount`, `total_amount`, `initial_payment`, `mode_of_payment`, `mode_of_payment_details`, `bal`, `bal_payment`, `no_of_emi`, `emi_amount`, `emi_start_date`, `amc`, `excutive_name`, `manager_name`, `dsa_id`, `dsa_name`, `member_offer`, `status`,`created_at`) VALUES ('$memberShipiddata', '$a_no', '$m_name','$dob1','$c_name', '$dob2', '$firstNomineeName',      '$firstNDob', '$secondNomineeName', '$secondNDob', '$thirdNomineeName', '$thirdNDob','$address',      '$city', '$pin', '$mob1', '$mob2', '$r_no', '$email', '$password', '$hash_password', '$doj','$tenure', '$vdate','$ctype', '$apartment', '$occupancy', '$days', '$purchase_amount', '$admin_amount', '$total_amount','$initial_payment', '$mode_of_payment', '$mode_of_payment_details', '$bal', '$bal_payment','$no_of_emi','$emi_amount', '$emi_start_date', '$amc', '$excutive_name', '$manager_name', '$dsa_id', '$dsa_name', '$member_offer','1',CURDATE());");
 
 $a=DB::insert("INSERT INTO `sequences`(`status`) VALUES ('0')");
 
@@ -217,6 +235,10 @@ public function show($id)
 */
 public function edit($id)
 {
+
+ if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
 	$editMember = Member::where('id', $id)->get();
 	// $editMember=DB::table('members')
  //            ->join('cashrecord', 'members.memberShipid', '=', 'cashrecord.membershipid')->select('*')->get();
@@ -232,7 +254,11 @@ public function edit($id)
 */
 public function update(Request $request, $id)
 {
-	$memberShipiddata = $request->input('memberShipiddata');
+	 if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
+
+  $memberShipiddata = $request->input('memberShipiddata');
   $a_no = $request->input('a_no');
   $m_name = $request->input('m_name');
   $dob1 = $request->input('dob1');
@@ -292,29 +318,78 @@ public function update(Request $request, $id)
 */
 public function destroy($id)
 {
-	Member::where('id', $id)->delete();
+	 if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
+
+  Member::where('id', $id)->delete();
 	return back();
 
 }
 
 public function memberPDF($id)
 {
-	$memberPrint = Member:: where('id', $id)->get();
+	 if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
+
+  $memberPrint = Member:: where('id', $id)->get();
 	return view('member.view', compact('memberPrint'));
 }
 
 public function memberReceipt($id)
 {
-	$memberInfo = Member::where('memberShipid',$id)->get();
+	 if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
+  $memberInfo = Member::where('memberShipid',$id)->get();
 	$paymentInfo = Memberpayment::where('memberShipid', $id)->get();
 	return view('member.receipt', compact('memberInfo','paymentInfo'));
 }
 
   public function agreementDownload(Request $request,$id)
 {
+   if (! Gate::allows('member_manage')) {
+            return abort(401);
+        }
   $memberInfo = Member::where('id',$id)->get();
   
   $pdf = PDF::loadView('member.downloadAgreement',compact('memberInfo'));
   return $pdf->download('downloadAgreement.pdf');
 }
+
+ public function memberReport(Request $request)
+    {
+       $data=Member::all();
+       $location=Venue::all();
+
+        return view('report.member.index',compact(['data','location']));
+    }
+ public function reportData(Request $request){
+    //according to date 
+   $start= \Carbon\Carbon::parse($request->start_date)->format('Y-m-d');
+   $end = \Carbon\Carbon::parse($request->end_date)->format('Y-m-d');
+
+   $dsa_name=$request->input('dsa_name');
+
+if($dsa_name){
+         $data=  DB::table('members')->where('dsa_name',$dsa_name)->get();
+        return view('report.member.index',compact('data'));
+     }
+   
+    if($dsa_name AND $start AND $end){
+     $data=DB::table('members')->whereBetween('created_at', [$start, $end])->where('dsa_name',$dsa_name)->get();
+     return view('report.member.index',compact('data')); 
+     }
+     elseif($start AND $end){
+        $data = DB::table('members')->whereBetween('created_at', [$start, $end])->get();
+        return view('report.member.index',compact('data')); 
+     }
+     elseif($dsa_name){
+         $data=  DB::table('members')->where('dsa_name',$dsa_name)->get();
+        return view('report.member.index',compact('data'));
+     }
+    
+   }
+
 }

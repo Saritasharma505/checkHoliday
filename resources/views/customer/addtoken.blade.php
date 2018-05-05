@@ -1,3 +1,4 @@
+@inject('request', 'Illuminate\Http\Request')
 @extends('layouts.app')
 @section('content')
 <style>
@@ -26,7 +27,7 @@ input{ margin-top: 10px; }
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                    <form method="post" action="{{ url('admin/complain-user-record-detail')}}">
+                    <form method="post" action="{{route('admin.complain-user-record-detail')}}">
                      
                       <?php echo csrf_field();?>
                       

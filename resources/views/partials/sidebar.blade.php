@@ -49,9 +49,10 @@
                     </li>
                 </ul>
             </li>
-           @endcan
+           
+              @endcan
 
-            
+            @can('configuration_manage')
             <!-- Menu Bar -->
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{url('/configuration')}}">
@@ -59,52 +60,65 @@
                     <span class="title">Configrution</span>
                 </a>
             </li>
+            @endcan
+            @can('location_manage')    
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{url('/locations')}}">
                     <i class="fa fa-map-marker"></i>
                     <span class="title">Location</span>
                 </a>
             </li>
+            @endcan
+            @can('member_manage') 
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{url('/member')}}">
                     <i class="fa fa-users"></i>
                     <span class="title">Members</span>
                 </a>
             </li>
+             @endcan
+            @can('voucher_manage') 
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{url('/voucher')}}">
                     <i class="fa fa-gift"></i>
                     <span class="title">Voucher</span>
                 </a>
             </li>
-            
+            @endcan
+             @can('payment_manage') 
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
-                <a href="{{url('/payment')}}">
+                <a href="{{url('/payment-update')}}">
                     <i class="fa fa-credit-card"></i>
                     <span class="title">Payment Update</span>
                 </a>
             </li>
+            @endcan
+             @can('amc_manage') 
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{url('/amc')}}">
                     <i class="fa fa-cc-mastercard"></i>
                     <span class="title">AMC Update</span>
                 </a>
             </li>
+            @endcan
+             @can('holiday_request') 
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{url('/holiday')}}">
                     <i class="fa fa-plane"></i>
                     <span class="title">Holiday Request</span>
                 </a>
             </li>
+            @endcan
+            @can('customer_support')
              <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
                 <a href="{{url('admin/customersupport')}}">
                     <i class="fa fa-commenting"></i>
                     <span class="title">Customer Support</span>
                 </a>
             </li>
-
+            @endcan
            <!--  Report Details -->
-
+           @can('report_manage')
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-binoculars"></i>
@@ -116,7 +130,7 @@
                 <ul class="treeview-menu">
 
                     <li class="{{ $request->segment(2) == 'permissions' ? 'active active-sub' : '' }}">
-                        <a href="#">
+                        <a href="/member-report">
                             <i class="fa fa-child"></i>
                             <span class="title">
                                 Member Report
@@ -124,7 +138,7 @@
                         </a>
                     </li>
                     <li class="{{ $request->segment(2) == 'roles' ? 'active active-sub' : '' }}">
-                        <a href="#">
+                        <a href="/amc-report">
                             <i class="fa fa-credit-card"></i>
                             <span class="title">
                                 AMC Report
@@ -132,7 +146,7 @@
                         </a>
                     </li>
                     <li class="{{ $request->segment(2) == 'users' ? 'active active-sub' : '' }}">
-                        <a href="#">
+                        <a href="/payment-report">
                             <i class="fa fa-credit-card-alt"></i>
                             <span class="title">
                                 Payment Report
@@ -141,6 +155,7 @@
                     </li>
                 </ul>
             </li>
+            @endcan
            <!--  end Report -->
 
             <li class="{{ $request->segment(1) == 'change_password' ? 'active' : '' }}">
@@ -157,6 +172,7 @@
                 </a>
             </li>
         </ul>
+
     </section>
 </aside>
 {!! Form::open(['route' => 'auth.logout', 'style' => 'display:none;', 'id' => 'logout']) !!}

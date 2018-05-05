@@ -23,6 +23,9 @@ class CreatePaymentsTable extends Migration
             $table->string('dsa_assigned');
             $table->string('txnID');
             $table->string('paymentDate');
+            $table->foreign('member_id')->references('memberShipid')->on('members');
+
+
 
             $table->timestamps();
         });

@@ -23,7 +23,9 @@ ul li{ text-decoration: none; list-style-type: none;}
           <div class="box-body" id='overflowTest'>
           
            <ul class="chat">
-           <?php foreach($messages as $msg){ 
+           <?php 
+
+            foreach($messages as $msg){ 
             if($msg->user_id==0){ ?>
                       <li class="left clearfix img-circle">
                       <div style="background: #ff9; height: 100px; width: 300px; margin-top: 20px; text-align: left;">
@@ -57,7 +59,7 @@ ul li{ text-decoration: none; list-style-type: none;}
                           </div>
                           </div>
                       </li>
-                      <?php } }?>
+                      <?php } } ?>
                      
                   </ul>
          <!--  <?php //foreach($messages as $msg){ 
@@ -89,7 +91,7 @@ ul li{ text-decoration: none; list-style-type: none;}
             
             <div class="form-group">
               <input name="subject" class="form-control" placeholder="Subject:" required>
-              <input name="member_id" class="form-control" type="hidden" value="<?php echo $messages[0]->member_id;?>">
+              <input name="member_id" class="form-control" type="hidden" value="<?php echo $messages->member_id;?>">
               <input name="user_id" class="form-control" type="hidden" value="1">
             </div>
             <div class="form-group">

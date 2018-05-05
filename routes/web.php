@@ -44,7 +44,7 @@ Route::get('/member/download-agreement/{id}', 'MembersController@agreementDownlo
 
 //Payment Route
 
-Route::get('/payment','PaymentController@index')->name('payment.index');
+Route::get('/payment-update','PaymentController@index')->name('payment.index');
 Route::get('/adpayment','PaymentController@create')->name('payment.create');
 Route::post('/adpayment/save','PaymentController@store')->name('payment.store');
 Route::get('/payment-receipt','PaymentController@paymentReceipt')->name('payment.paymentReceipt');
@@ -79,17 +79,17 @@ Route::post('/locations/venue-update','VenueController@update')->name('venue.upd
 Route::get('/admin/venue/datashow/{id}','VenueController@create')->name('create');
 
 //customer support routes
+
 Route::get('admin/customersupport','CustomerController@index')->name('index');
 Route::get('admin/customer-view-message/{id}','CustomerController@view')->name('view');
 Route::get('admin/customer-view-message-show/{id}','CustomerController@message')->name('message');
 Route::post('admin/send-message-user-admin-member','CustomerController@create')->name('create');
 Route::get('admin/complain','CustomerController@complainform')->name('complainform');
-Route::post('admin/complain-user-record-detail','CustomerController@complainadd')->name('complainadd');
+Route::post('admin/complain-user-record-detail','CustomerController@complainadd')->name('admin.complain-user-record-detail');
 Route::get('admin/customer-view-message-show-single/{id}','CustomerController@single')->name('single');
 
-
-
-
+Route::get('admin/customer-view-message-show-complete/{id}','CustomerController@complete')->name('complete');
+/*close*/
 
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -102,3 +102,16 @@ Route::resource('users', 'Admin\UsersController');
 Route::post('users_mass_destroy', ['uses' => 'Admin\UsersController@massDestroy', 'as' => 'users.mass_destroy']);
 
 });
+
+
+//reports routes amc
+Route::get('/amc-report','AmcController@amcReport')->name('amcReport');
+Route::get('/amc-report/data','AmcController@reportData');
+
+//reports routes member
+Route::get('/member-report','MembersController@memberReport')->name('memberReport');
+Route::get('/member-report/data','MembersController@reportData')->name('memberData');
+
+//payments routes member
+Route::get('/payment-report','PaymentController@paymentReport')->name('paymentReport');
+Route::get('/payment-report/data','PaymentController@reportData');

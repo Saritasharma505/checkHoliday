@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 use App\Vouchers;
 use Illuminate\Support\Facades\Session;
 
@@ -16,6 +18,10 @@ class GiftvouchersController extends Controller
      */
     public function index()
     {   
+       if (! Gate::allows('voucher_manage')) {
+            return abort(401);
+        }
+
         $VoucherDetails = vouchers::all();
         return view('voucher.index', compact('VoucherDetails'));
     }
@@ -27,6 +33,10 @@ class GiftvouchersController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('voucher_manage')) {
+            return abort(401);
+        }
+
         return view('voucher.create');
     }
 
@@ -38,18 +48,22 @@ class GiftvouchersController extends Controller
      */
     public function store(Request $request)
     {
+        if (! Gate::allows('voucher_manage')) {
+            return abort(401);
+        }
+
         $gname = $request->input('gname');
         $giftemail = $request->input('giftemail');
         $mobno = $request->input('mobno');
         $address = $request->input('address');
         $location = $request->input('location');
         $vcode = $request->input('vcode');
-        $dog = $request->input('dog');
+        $doj = $request->input('doj');
         $edate = $request->input('edate');
         $dsaName = $request->input('dsaName');
         $dsaId = $request->input('dsaId');
 
-        $data = DB::insert("INSERT INTO `vouchers`(`gname`, `giftemail`, `mobno`, `address`, `location`, `vcode`, `dog`, `edate`, `dsaName`, `dsaId`) VALUES ('$gname', '$giftemail', '$mobno', '$address', '$location', '$vcode', '$dog','$edate', '$dsaName',' $dsaId');");
+        $data = DB::insert("INSERT INTO `vouchers`(`gname`, `giftemail`, `mobno`, `address`, `location`, `vcode`, `doj`, `edate`, `dsaName`, `dsaId`) VALUES ('$gname', '$giftemail', '$mobno', '$address', '$location', '$vcode', '$doj','$edate', '$dsaName',' $dsaId');");
 
         Session::flash('message','Voucher Code Successfully Generate');
         return redirect()->action('GiftvouchersController@index');
@@ -63,6 +77,9 @@ class GiftvouchersController extends Controller
      */
     public function show($id)
     {
+         if (! Gate::allows('voucher_manage')) {
+            return abort(401);
+        }
         $viewVoucher = Vouchers::where('id', $id)->get();
         return view('voucher.view', compact('viewVoucher'));
     }
@@ -75,7 +92,9 @@ class GiftvouchersController extends Controller
      */
     public function edit($id)
     {
-        //
+         if (! Gate::allows('voucher_manage')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -87,7 +106,9 @@ class GiftvouchersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (! Gate::allows('voucher_manage')) {
+            return abort(401);
+        }
     }
 
     /**
@@ -98,13 +119,19 @@ class GiftvouchersController extends Controller
      */
     public function destroy($id)
     {
-         Vouchers::where('id', $id)->delete();
+         if (! Gate::allows('voucher_manage')) {
+            return abort(401);
+        }
+        Vouchers::where('id', $id)->delete();
         Session::flash('message','Voucher Successfully Delete ');
         return back();
     }
 
     public function print($id)
     {
+         if (! Gate::allows('voucher_manage')) {
+            return abort(401);
+        }
         $printVoucher = Vouchers::where('id', $id)->get();
         return view('voucher.voucherprint', compact('printVoucher'));
     }
