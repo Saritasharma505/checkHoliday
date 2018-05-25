@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Vouchers;
 use Illuminate\Support\Facades\Session;
 
+
 class GiftvouchersController extends Controller
 {
     /**
@@ -68,6 +69,7 @@ class GiftvouchersController extends Controller
         Session::flash('message','Voucher Code Successfully Generate');
         return redirect()->action('GiftvouchersController@index');
     }
+
 
     /**
      * Display the specified resource.
@@ -135,6 +137,29 @@ class GiftvouchersController extends Controller
         $printVoucher = Vouchers::where('id', $id)->get();
         return view('voucher.voucherprint', compact('printVoucher'));
     }
+
+    public function sendMail($id)
+    {
+  
+          $val=DB::table('vouchers')->where('id',$id)->get();
+           //dd($val);
+
+          $data = array('name'=> "The Holidays Club", "body" => "Holidays Voucher");
+
+          Mail::send('emails.voucherMail', $data, function($message) {
+
+              $message->to('hr@eduplus.net.in', 'Voucher Mail')
+
+                      ->subject('The Holidays Club  Voucher');
+
+              $message->from('admin@theholidaysclub.com','The Holidays Club');
+
+          });
+
+  Session::flash('message','Mail Sent Successfully!!');
+  return redirect()->route('member.index');
+}
+
       /**
      * Show the form for editing the specified resource.
      *

@@ -1,6 +1,9 @@
-@inject('request', 'Illuminate\Http\Request')
-@extends('layouts.app')
-@section('content')
+@include('header')
+@extends('adminlte::page')
+
+@section('title', 'AdminLTE')
+
+@section('content_header')
 <style>
 #overflowTest {
   padding: 15px;
@@ -22,7 +25,7 @@ ul li{ text-decoration: none; list-style-type: none;}
           <div class="box-body" id='overflowTest'>
           
            <ul class="chat">
-           <?php if($messages!=""){foreach($messages as $msg){ 
+           <?php foreach($messages as $msg){ 
             if($msg->user_id==0){ ?>
                       <li class="left clearfix img-circle">
                       <div style="background: #ff9; height: 100px; width: 300px; margin-top: 20px; text-align: left;">
@@ -30,7 +33,8 @@ ul li{ text-decoration: none; list-style-type: none;}
                           <img src="{{ URL::to('/vendor/download.jpeg')}}" alt="User Avatar" class="img-circle" height="30" width="30"/>
                       </span>
                           <div class="chat-body clearfix">
-                              <div class="header">URL::                                    <strong class="primary-font img-circle"> <?php echo $msg->subject;?></strong> <small class="pull-right text-muted">
+                              <div class="header">
+                              URL::<strong class="primary-font img-circle"> <?php echo $msg->subject;?></strong> <small class="pull-right text-muted">
                                       <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
                               </div>
                               <p>
@@ -56,7 +60,7 @@ ul li{ text-decoration: none; list-style-type: none;}
                           </div>
                           </div>
                       </li>
-                      <?php } } }?>
+                      <?php } }?>
                      
                   </ul>
          <!--  <?php //foreach($messages as $msg){ 
@@ -87,7 +91,7 @@ ul li{ text-decoration: none; list-style-type: none;}
             <?php echo csrf_field();?>
             
             <div class="form-group">
-              <input name="subject" class="form-control" placeholder="Subject:" value="<?php echo $messages[0]->subject;?>">
+              <input name="subject" class="form-control" placeholder="Subject:" required>
               <input name="member_id" class="form-control" type="hidden" value="<?php echo $messages[0]->member_id;?>">
               <input name="user_id" class="form-control" type="hidden" value="1">
             </div>
@@ -114,7 +118,7 @@ ul li{ text-decoration: none; list-style-type: none;}
 </div>
 
 
-@endsection
+@stop
 <script>
 $(document).ready(function() {
   $('#table').DataTable();

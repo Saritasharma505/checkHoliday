@@ -1,5 +1,6 @@
 <?php $request = app('Illuminate\Http\Request'); ?>
 
+
 <?php $__env->startSection('content'); ?>
 
 <div id="page-wrapper">
@@ -37,7 +38,20 @@
                         </thead>
                         
                         <tbody>
-                       
+                        <?php $i=1; foreach ($memberpayments   as $key => $value) {
+                            
+                           ?>
+                            <tr>
+                               <td><?php echo $i++  ;?></td>
+                                <td><?php echo $value->memberShipid;?></td>
+                                <td><?php echo $value->txnID;?></td>
+                                 <td><?php echo $value->mode_of_payment;?></td>
+                                 <td><?php echo $value->mode_of_payment;?></td>
+                                <td><?php echo $value->initial_payment;?></td>
+
+                                <td><?php echo $value->payDate;?></td>
+                            </tr>
+                               <?php } ?>
                             
                         </tbody>
 
@@ -79,7 +93,9 @@
                 </span>
                     <div class="chat-body clearfix">
                         <div class="header">URL::                                    <strong class="primary-font img-circle"> <?php echo $msg->subject;?></strong> <small class="pull-right text-muted">
-                                <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                <span class="glyphicon glyphicon-time"></span>
+                                 
+                              </small>
                         </div>
                         <p>
                             <?php echo $msg->message;?>
@@ -116,10 +132,10 @@
       </div>
       <!-- /.tab-pane -->
      <div class="tab-pane active" id="tab_3-2">
-       <button onclick="window.history.back();" class="btn btn-primary">Back</button>
+       
         <div class="panel panel-default">
                 <div class="panel-heading">
-                  User Complain <a href="<?php echo e(url('admin/customer-view-message-show-complete')); ?>/<?php echo $complains[0]->member_id;?>" class="btn btn-success">Done</a>
+                  <button class="btn btn-danger" onclick="window.history.back();"> Back </button>User Complain   
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -127,7 +143,7 @@
                     <table width="100%" class="table" id="table2">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>#id</th>
                                 <th>Membership ID</th>
                                 <th>User Name</th>
                                 <th>Subject</th>
@@ -143,20 +159,20 @@
                            ?>
                             <tr>
                                <td><?php echo $i++;?></td>
-                                <td><?php echo $value->member_id;?></td>
+                                <td><?php echo $value->memberShipid;?></td>
                                  <td><?php echo $value->user_name;?></td>  
                                  
                                  <td><?php echo $value->subject;?></td>
                                 <td><?php echo $value->message;?></td>
-                                <?php if($value->status_red==0){?>
-                                <td colspan="2"><a class="btn btn-danger" href="<?php echo e(url('admin/customer-view-message-show-single')); ?>/<?php echo $value->member_id;?>">Complain</a>
+                                <?php if($value->status_red==''){?>
+                                <td colspan="2"><a class="btn btn-danger" href="<?php echo e(url('admin/customer-view-message-show-single')); ?>/<?php echo e($value->memberShipid); ?>/<?php echo e($value->id); ?>">Complain</a>
                                 </td>
 
-                                <?php } elseif($value->status_red==1){ ?>
-                                <td colspan="2"><a href="<?php echo e(url('admin/customer-view-message-show-single')); ?>/<?php echo $value->member_id;?>" class="btn btn-info">Continue</a></td>
+                                <?php } else if($value->status_red==1){ ?>
+                                <td colspan="2"><a href="<?php echo e(url('admin/customer-view-message-show-single')); ?>/<?php echo $value->memberShipid;?>/<?php echo $value->id;?>" class="btn btn-info">Continue</a></td>
                                 <?php } else{ ?>
-                                <td>
-                                  <a href="<?php echo e(url('admin/customer-view-message-show-complete')); ?>/<?php echo $value->member_id;?>" class="btn btn-success">Complete</a>
+                                <td colspan="2">
+                                <a href="javascript:void(0);" class="btn btn-success">Done</a>
                                 </td>
                                 <?php }?>
                                 <td><?php echo $value->created_at;?></td>
@@ -182,10 +198,10 @@
 <!-- /.col -->
 </div>
 
+
 <?php $__env->stopSection(); ?>
-<?php $__env->startSection('javascript'); ?>
 <script>
-/*$(document).ready(function() {
+$(document).ready(function() {
 $('#table').DataTable();
 } );
 $(document).ready(function() {
@@ -193,35 +209,11 @@ $('#table1').DataTable();
 } );
 $(document).ready(function() {
 $('#table2').DataTable();
-} );*/
+} );
+</script>
 
-  $(document).ready(function() {
-    $('#table').DataTable( {
-        dom: 'lBfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
-} );
-   $(document).ready(function() {
-    $('#table1').DataTable( {
-        dom: 'lBfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
-} );
-    $(document).ready(function() {
-    $('#table2').DataTable( {
-        dom: 'lBfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
-} );
- </script>
 
- <?php $__env->stopSection(); ?>
+
 
 
 <?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

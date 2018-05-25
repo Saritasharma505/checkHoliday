@@ -9,10 +9,12 @@ use App\Http\Controllers\Controller;
 use App\Memberpayment;
 use App\User;
 use App\Venue;
+use Mail;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Cashdetails;
 use PDF;
+use Session;
 class MembersController extends Controller
 {
 /**
@@ -79,7 +81,7 @@ $mob2 =$request->input('mob2');
 $r_no =$request->input('r_no');
 $email =$request->input('email');
 $password =$request->input('password');
-$hash_password =$request->input('hash_password');
+$hash_password =md5($request->input('hash_password'));
 $doj =$request->input('doj');
 $tenure =$request->input('tenure');
 $vdate =$request->input('vdate');
@@ -205,14 +207,19 @@ if ($emi_start_date == '') {
 $emi_start_date = NUll;
 }
 
-/*$data1=Member::create([`memberShipid`=>$memberShipiddata,`a_no`=>$a_no, `m_name`=>$m_name, `dob1`=>$dob1, `c_name`=>$c_name, `dob2`=>$dob2, `firstNomineeName`=>$firstNomineeName, `firstNDob`=>$firstNDob, `secondNomineeName`=>$secondNomineeName, `secondNDob`=>$secondNDob, `thirdNomineeName`=>$thirdNomineeName, `thirdNDob`=>$thirdNDob, `address`=>$address, `city`=>$city, `pin`=>$pin, `mob1`=>$mob1, `mob2`=>$mob2, `r_no`=>$r_no, `email`=>$email, `password`=>$password, `hash_password`=>$hash_password, `doj`=>$doj, `tenure`=>$tenure, `vdate`=>$vdate, `ctype`=>$ctype, `apartment`=>$apartment, `occupancy`=>$occupancy, `days`=>$days, `purchase_amount`=>$purchase_amount, `admin_amount`=>$admin_amount, `total_amount`=>$total_amount, `initial_payment`=>$initial_payment, `mode_of_payment`=>$mode_of_payment, `mode_of_payment_details`=>$mode_of_payment_details, `bal`=>$bal, `bal_payment`=>$bal_payment, `no_of_emi`=>$no_of_emi, `emi_amount`=>$emi_amount, `emi_start_date`=>$emi_start_date, `amc`=>$amc, `excutive_name`=>$excutive_name, `manager_name`=>$manager_name, `dsa_id`=>$dsa_id, `dsa_name`=>$dsa_name, `member_offer`=>$member_offer, `status`=>'1']);*/
+/*$data=DB::table('members')->insertGetId(['memberShipid'=>$memberShipiddata,'a_no'=>$a_no, 'm_name'=>$m_name, 'dob1'=>$dob1, 'c_name'=>$c_name, 'dob2'=>$dob2, 'firstNomineeName'=>$firstNomineeName, 'firstNDob'=>$firstNDob, 'secondNomineeName'=>$secondNomineeName, 'secondNDob'=>$secondNDob, 'thirdNomineeName'=>$thirdNomineeName, 'thirdNDob'=>$thirdNDob, 'address'=>$address, 'city'=>$city, 'pin'=>$pin, 'mob1'=>$mob1, 'mob2'=>$mob2, 'r_no'=>$r_no, 'email'=>$email, 'password'=>$password, 'hash_password'=>$hash_password, 'doj'=>$doj, 'tenure'=>$tenure, 'vdate'=>$vdate, 'ctype'=>$ctype, 'apartment'=>$apartment, 'occupancy'=>$occupancy, 'days'=>$days, 'purchase_amount'=>$purchase_amount, 'admin_amount'=>$admin_amount, 'total_amount'=>$total_amount, 'initial_payment'=>$initial_payment, 'mode_of_payment'=>$mode_of_payment, 'mode_of_payment_details'=>$mode_of_payment_details, 'bal'=>$bal, 'bal_payment'=>$bal_payment, 'no_of_emi'=>$no_of_emi, 'emi_amount'=>$emi_amount, 'emi_start_date'=>$emi_start_date, 'amc'=>$amc, 'excutive_name'=>$excutive_name, 'manager_name'=>$manager_name, 'dsa_id'=>$dsa_id, 'dsa_name'=>$dsa_name, 'member_offer'=>$member_offer, 'status'=>'1']);
  
+  print_r($data);
+dd();*/
 $data = DB::insert("INSERT INTO `members`(`memberShipid`, `a_no`, `m_name`, `dob1`, `c_name`, `dob2`, `firstNomineeName`, `firstNDob`, `secondNomineeName`, `secondNDob`, `thirdNomineeName`, `thirdNDob`, `address`, `city`, `pin`, `mob1`, `mob2`, `r_no`, `email`, `password`, `hash_password`, `doj`, `tenure`, `vdate`, `ctype`, `apartment`, `occupancy`, `days`, `purchase_amount`, `admin_amount`, `total_amount`, `initial_payment`, `mode_of_payment`, `mode_of_payment_details`, `bal`, `bal_payment`, `no_of_emi`, `emi_amount`, `emi_start_date`, `amc`, `excutive_name`, `manager_name`, `dsa_id`, `dsa_name`, `member_offer`, `status`,`created_at`) VALUES ('$memberShipiddata', '$a_no', '$m_name','$dob1','$c_name', '$dob2', '$firstNomineeName',      '$firstNDob', '$secondNomineeName', '$secondNDob', '$thirdNomineeName', '$thirdNDob','$address',      '$city', '$pin', '$mob1', '$mob2', '$r_no', '$email', '$password', '$hash_password', '$doj','$tenure', '$vdate','$ctype', '$apartment', '$occupancy', '$days', '$purchase_amount', '$admin_amount', '$total_amount','$initial_payment', '$mode_of_payment', '$mode_of_payment_details', '$bal', '$bal_payment','$no_of_emi','$emi_amount', '$emi_start_date', '$amc', '$excutive_name', '$manager_name', '$dsa_id', '$dsa_name', '$member_offer','1',CURDATE());");
 
 $a=DB::insert("INSERT INTO `sequences`(`status`) VALUES ('0')");
 
 $paymentSave = DB::Insert("INSERT INTO `memberpayments`(`txnID`, `memberShipid`, `mode_of_payment`, `initial_payment`, `payDate`,`m_name`,`dsa_name`) VALUES ('$word','$memberShipiddata','$mode_of_payment', '$initial_payment','$payDate','$m_name','$dsa_name');");
-
+//$member_id=Session::set('memberShipid', $memberShipiddata);
+/*$member_id=Session::get('memberShipid', $memberShipiddata);
+$preview=DB::table('members')->where('memberShipid',$member_id)->get();*/
+//dd($preview);
 // $b=DB::insert("INSERT INTO cashrecord(`membershipid`,`bank_name`,`card_type`, `card_holder_name`, `card_amount`, `card_number_digits`, `cash_amount`, `online_amount`, `cash_card_amount`, `cheque_holder_name`, `cheque_number_digits`, `cheque_amount`)VALUES('$memberShipid','$bank_name','$card_type','$card_holder_name','$card_amount','$card_number_digits','$cash_amount','$online_amount','$cash_card_amount',$cheque_holder_name','$cheque_number_digits','$cheque_amount')");
 
 return redirect()->route('member.index');
@@ -391,5 +398,33 @@ if($dsa_name){
      }
     
    }
+public function sendMail($id)
+{
+  
+  
+  $val=DB::table('members')->where('id',$id)->get();
+   //dd($val);
 
+  $data = array('name'=> "The Holidays Club", "body" => "Test mail",'user_id'=>  $val[0]->email,'user_pass'=> $val[0]->password );
+  $email_id=$val[0]->email;
+
+  Mail::send('emails.mail', $data, function($message) {
+
+      $message->to('hr@eduplus.net.in', 'Membership Mail')
+
+              ->subject('The Holidays Club Mail Testing');
+
+      $message->from('admin@theholidaysclub.com','The Holidays Club');
+
+  });
+
+  Session::flash('message','Mail Sent Successfully!!');
+  return redirect()->route('member.index');
+}
+
+  public function preview($id)
+  {
+      $previewMember = Member::where('id', $id)->get();
+      return view('member.preview',compact('previewMember'));
+  }
 }

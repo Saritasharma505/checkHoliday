@@ -25,7 +25,7 @@ Route::get('/configuration/edit-config/{id}','ConfigurationController@edit');
 Route::post('/configuration/update','ConfigurationController@update');
 
 //Vouchers Route
-Route::get('/voucher','GiftvouchersController@index');
+Route::get('/voucher','GiftvouchersController@index')->name('voucher.index');
 Route::get('/addvoucher','GiftvouchersController@create');
 Route::post('/generatevoucher','GiftvouchersController@store');
 Route::get('/voucher/view/{id}','GiftvouchersController@show');
@@ -40,8 +40,9 @@ Route::get('/member/delete/{id}','MembersController@destroy');
 Route::get('/member/edit/{id}','MembersController@edit');
 Route::get('/member/member-pdf/{id}','MembersController@memberPDF');
 Route::get('/member/member-receipt/{id}','MembersController@memberReceipt');
-Route::get('/member/download-agreement/{id}', 'MembersController@agreementDownload')->name('download-agreement');  
-
+Route::get('/member/download-agreement/{id}', 'MembersController@agreementDownload')->name('download-agreement');
+Route::get('/member/preview/{id}','MembersController@preview')->name('member.preview');  
+Route::get('/member/send-email/{id}','MembersController@sendMail')->name('sendmail');
 //Payment Route
 
 Route::get('/payment-update','PaymentController@index')->name('payment.index');
@@ -85,12 +86,12 @@ Route::get('admin/customer-view-message/{id}','CustomerController@view')->name('
 Route::get('admin/customer-view-message-show/{id}','CustomerController@message')->name('message');
 Route::post('admin/send-message-user-admin-member','CustomerController@create')->name('create');
 Route::get('admin/complain','CustomerController@complainform')->name('complainform');
-Route::post('admin/complain-user-record-detail','CustomerController@complainadd')->name('admin.complain-user-record-detail');
-Route::get('admin/customer-view-message-show-single/{id}','CustomerController@single')->name('single');
+Route::post('admin/complain-user-record-detail','CustomerController@complainadd')->name('complainadd');
+Route::get('admin/customer-view-message-show-single/{member_id}/{id}','CustomerController@single')->name('single');
+Route::get('admin/complete/{id}','CustomerController@complete')->name('complete.done');
+Route::post('admin/send-message-user-admin-member-remainder','CustomerController@remainder')->name('remainder');
 
-Route::get('admin/customer-view-message-show-complete/{id}','CustomerController@complete')->name('complete');
 /*close*/
-
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::get('/home', 'HomeController@index');
@@ -115,3 +116,4 @@ Route::get('/member-report/data','MembersController@reportData')->name('memberDa
 //payments routes member
 Route::get('/payment-report','PaymentController@paymentReport')->name('paymentReport');
 Route::get('/payment-report/data','PaymentController@reportData');
+

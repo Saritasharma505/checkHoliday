@@ -19,8 +19,7 @@
  <div style="overflow-x:auto;">
  <!-- message Print -->
     <?php if(Session::has('message')) {?>
-        <div id="alert" class="alert alert-success">{{ Session::get('message') }}
-
+        <div id="alert" class="alert alert-info">{{ Session::get('message') }}
         </div>
      <?php } ?>
  <div class="box-body table-responsive">
@@ -48,7 +47,7 @@
             <th class="text-center">Executive Name</th>
             <th class="text-center">Manager Name</th>
             <th  style="padding-right: 265px; text-align:center;">Extra Offer</th>
-            <th style="padding-left: 100px;padding-right: 80px;">Actions</th>
+            <th style="padding-left: 100px;padding-right: 150px;">Actions</th>
 
         </tr>
     </thead>
@@ -83,6 +82,7 @@
            <a  class="fa fa-print btn btn-success" title="PDF Print" href="{{url('/member/member-pdf')}}/<?= $info->id;?>"></a>
            <a  class="fa fa-copy btn btn-warning" title="Receipt Print" href="{{url('/member/member-receipt')}}/<?= $info->memberShipid;?>"></a>
            <a  class="fa fa-download btn btn-info" title="Download Agreement" href="{{url('/member/download-agreement')}}/<?= $info->id;?>"></a>
+            <a  class="fa fa-eye btn btn-primary" title="Preview" href="{{url('/member/preview/')}}/<?= $info->id;?>"></a>
            </td>
         </tr>
  @endforeach

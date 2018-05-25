@@ -1,4 +1,3 @@
-@inject('request', 'Illuminate\Http\Request')
 @extends('layouts.app')
 
 @section('content')
@@ -12,29 +11,73 @@
 }
 ul li{ text-decoration: none; list-style-type: none;}
 </style>
+@section('content')
 <div id="page-wrapper">
-<div class="col-md-12">
+   <div class=" col-md-12" style="margin-bottom: 20px;">
+     <button class="btn btn-info" onclick="window.history.back();">Back</button>
+           <a class="btn btn-danger" href="{{url('complete')}}/<?php echo $messages[0]->memberShipid;?>">Done</a>
+   </div>
+  <div class=" col-md-6">
+    <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header with-border">
-          <button class="btn-info" onclick="window.history.back();">Back</button>
+            <h3 class="box-title">Reminder data</h3>
+            @if(Session::has('status'))
+                <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('status') !!}</em></div>
+            @endif
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+          <form method="post" action="{{ route('remainder')}}">
+           
+            <?php echo csrf_field();?>
+            
+            <div class="form-group">
+
+              <input name="memberShipid" class="form-control" type="hidden" value="<?php echo $messages[0]->memberShipid;?>">
+            </div>
+            <div class="form-group">
+                  <textarea id="compose-textarea" name="remainder" class="form-control" style="height: 100px" required placeholder="Message">
+                    <?php echo $remainder;?>
+                  </textarea>
+            </div>
+             <div class="box-footer">
+            <div class="pull-right">
+          
+              <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Save</button>
+            </div>
+           
+          </div>
+           </form>
+          </div>
+
+          <!-- /.box-body -->
+         
+          <!-- /.box-footer -->
+        </div>
+        <!-- /. box -->
+  </div>
+  </div>
+<div class=" col-md-6">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+          
             <h3 class="box-title">New Message</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body" id='overflowTest'>
           
            <ul class="chat">
-           <?php 
-
-            foreach($messages as $msg){ 
-            if($msg->user_id==0){ ?>
-                      <li class="left clearfix img-circle">
-                      <div style="background: #ff9; height: 100px; width: 300px; margin-top: 20px; text-align: left;">
-                      <span class="chat-img pull-left">
+           <?php foreach($messages as $msg){ 
+            if($msg->user_id==1){ ?>
+                      <li class="col-md-offset-6 left clearfix img-circle">
+                      <div class="col-md-offset-6col-md-6" style="background: green; height: 100px; width: 300px; margin-top: 20px; text-align: left;">
+                      <span class="chat-img pull-right">
                           <img src="{{ URL::to('/vendor/download.jpeg')}}" alt="User Avatar" class="img-circle" height="30" width="30"/>
                       </span>
                           <div class="chat-body clearfix">
                               <div class="header">URL::                                    <strong class="primary-font img-circle"> <?php echo $msg->subject;?></strong> <small class="pull-right text-muted">
-                                      <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                      <span class="glyphicon glyphicon-time"></span></small>
                               </div>
                               <p>
                                   <?php echo $msg->message;?>
@@ -44,22 +87,23 @@ ul li{ text-decoration: none; list-style-type: none;}
                       </li>
                        <?php } else { ?>
                       <li class="left clearfix">
-                          <div style="background: #ff9; height: 100px; width: 300px; margin-top: 20px; text-align: right;">
+                          <div style="background: #ccc; height: 100px; width: 300px; margin-top: 20px; text-align: right;">
                       <span class="chat-img pull-left">
                           <img src="{{ URL::to('/vendor/download.jpeg')}}" alt="User Avatar" class="img-circle" height="30" width="30" />
                       </span>
                           <div class="chat-body clearfix">
                               <div class="header">
                                   <small class=" text-muted"><span class="glyphicon glyphicon-time"><?php echo $msg->created_at;?></span></small><br>
-                                  <strong class="pull-right primary-font"> <?php echo $msg->subject;?></strong>
+                                  <strong class="pull-right primary-font"> <?php //echo $msg->subject;?></strong>
                               </div><br>
+
                               <p>
                                  <?php echo $msg->message;?>
                               </p>
                           </div>
                           </div>
                       </li>
-                      <?php } } ?>
+                      <?php } }?>
                      
                   </ul>
          <!--  <?php //foreach($messages as $msg){ 
@@ -75,7 +119,7 @@ ul li{ text-decoration: none; list-style-type: none;}
         </div> -->
         <!-- /. box -->
   </div> 
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header with-border">
             <h3 class="box-title">Send Message</h3>
@@ -90,12 +134,12 @@ ul li{ text-decoration: none; list-style-type: none;}
             <?php echo csrf_field();?>
             
             <div class="form-group">
-              <input name="subject" class="form-control" placeholder="Subject:" required>
-              <input name="member_id" class="form-control" type="hidden" value="<?php echo $messages->member_id;?>">
-              <input name="user_id" class="form-control" type="hidden" value="1">
+              <input type="hidden" name="subject" class="form-control" placeholder="Subject:" value="issue">
+              <input name="memberShipid" class="form-control" type="hidden" value="<?php echo $messages[0]->memberShipid;?>">
+              <input name="user_id" class="form-control" type="hidden" value="2">
             </div>
             <div class="form-group">
-                  <textarea id="compose-textarea" name="message" class="form-control" style="height: 100px" required placeholder="Message">
+                  <textarea id="editor1" rows="10" cols="80" name="message" class="form-control" style="height: 100px" required placeholder="Message">
                   </textarea>
             </div>
              <div class="box-footer">
@@ -118,7 +162,18 @@ ul li{ text-decoration: none; list-style-type: none;}
 
 
 @endsection
+<script type="text/javascript" src="https://cdn.ckeditor.com/4.5.1/standard/ckeditor.js">
+  
+</script>
 <script>
+  CKEDITOR.editorConfig = function (config) {
+    config.language = 'es';
+    config.uiColor = '#F7B42C';
+    config.height = 300;
+    config.toolbarCanCollapse = true;
+
+};
+CKEDITOR.replace('editor1');
 $(document).ready(function() {
   $('#table').DataTable();
 } );

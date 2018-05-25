@@ -1,5 +1,6 @@
 @inject('request', 'Illuminate\Http\Request')
 @extends('layouts.app')
+
 @section('content')
 <style>
 #overflowTest {
@@ -27,12 +28,12 @@ input{ margin-top: 10px; }
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                    <form method="post" action="{{route('admin.complain-user-record-detail')}}">
+                    <form method="post" action="{{ url('admin/complain-user-record-detail')}}">
                      
                       <?php echo csrf_field();?>
                       
                       <div class="form-group">
-                        <input name="member_id" class="form-control" placeholder="Member Id:" required>
+                        <input name="memberShipid" class="form-control" placeholder="Member Id:" required>
                         <input name="subject" class="form-control" type="text" placeholder="Subject">
                         
                         <input name="user_name" class="form-control" type="text" placeholder="User Name">

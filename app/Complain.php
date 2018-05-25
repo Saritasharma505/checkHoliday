@@ -8,7 +8,7 @@ class Complain extends Model
 {
     
      protected $fillable = [
-         'member_id','subject','message','user_name','status_red','status_blue','status_red'
+         'member_id','subject','message','user_name','status_red','status_blue','status_red','remainder'
     ];
     
     protected $table='complains';
